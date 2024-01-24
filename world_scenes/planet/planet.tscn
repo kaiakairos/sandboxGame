@@ -1,0 +1,11 @@
+[gd_scene load_steps=2 format=3 uid="uid://c5ikt4hqyhdoy"]
+
+[ext_resource type="Script" path="res://world_scenes/planet/planet.gd" id="1_8tc4r"]
+
+[node name="Planet" type="Node2D"]
+script = ExtResource("1_8tc4r")
+
+[node name="ChunkContainer" type="Node2D" parent="."]
+
+[node name="Camera2D" type="Camera2D" parent="."]
+ignore_rotation = false

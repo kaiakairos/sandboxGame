@@ -1,0 +1,17 @@
+[gd_scene load_steps=2 format=3 uid="uid://7ejg1f0f55t6"]
+
+[ext_resource type="Script" path="res://world_scenes/chunk/chunk.gd" id="1_2ne51"]
+
+[node name="Chunk" type="Node2D"]
+script = ExtResource("1_2ne51")
+
+[node name="Sprite2D" type="Sprite2D" parent="."]
+centered = false
+
+[node name="StaticBody2D" type="StaticBody2D" parent="."]
+
+[node name="VisibleOnScreenNotifier2D" type="VisibleOnScreenNotifier2D" parent="."]
+rect = Rect2(0, 0, 32, 32)
+
+[connection signal="screen_entered" from="VisibleOnScreenNotifier2D" to="." method="_on_visible_on_screen_notifier_2d_screen_entered"]
+[connection signal="screen_exited" from="VisibleOnScreenNotifier2D" to="." method="_on_visible_on_screen_notifier_2d_screen_exited"]

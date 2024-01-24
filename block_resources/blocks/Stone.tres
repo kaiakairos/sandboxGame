@@ -1,0 +1,9 @@
+[gd_resource type="Resource" script_class="Block" load_steps=3 format=3 uid="uid://c0xkvphtv0o8n"]
+
+[ext_resource type="Texture2D" uid="uid://u4x1dw6tbkog" path="res://block_resources/block_textures/stone.png" id="1_t7sq4"]
+[ext_resource type="Script" path="res://block_resources/Block.gd" id="1_vviry"]
+
+[resource]
+script = ExtResource("1_vviry")
+texture = ExtResource("1_t7sq4")
+rotateTextureToGravity = false

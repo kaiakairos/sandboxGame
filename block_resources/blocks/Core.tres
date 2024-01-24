@@ -1,0 +1,10 @@
+[gd_resource type="Resource" script_class="Block" load_steps=3 format=3 uid="uid://dhid0oib5gkxy"]
+
+[ext_resource type="Script" path="res://block_resources/Block.gd" id="1_yygq7"]
+[ext_resource type="Texture2D" uid="uid://cu24bodwe40dh" path="res://block_resources/block_textures/core.png" id="2_e3iqt"]
+
+[resource]
+script = ExtResource("1_yygq7")
+texture = ExtResource("2_e3iqt")
+rotateTextureToGravity = false
+hasCollision = true
