@@ -1,6 +1,7 @@
 # Godot 4+ specific ignores
 .godot/
 .notes/
+.addons/godot-git-plugin/
 
 # Godot-specific ignores
 .import/
