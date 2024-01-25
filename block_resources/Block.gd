@@ -6,3 +6,11 @@ class_name Block
 @export var connectedTexture : bool = false
 
 @export var hasCollision : bool = true
+@export var testWiggle : bool = false
+
+
+func onTick(x,y,data):
+	if testWiggle:
+		if data[x][y-1] == 0:
+			return {Vector2(x,y):0,Vector2(x,y-1):5}
+	return {}

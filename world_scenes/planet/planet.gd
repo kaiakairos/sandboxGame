@@ -3,51 +3,54 @@ extends Node2D
 @onready var chunkContainer = $ChunkContainer
 var chunkScene = preload("res://world_scenes/chunk/chunk.tscn")
 
-const SIZEINCHUNKS = 32 # (size * 4)^2 = number of tiles
-
+const SIZEINCHUNKS = 32 # (size * 8)^2 = number of tiles
 
 var planetData = []
 var centerPoint = Vector2.ZERO
 
+#Noise
+var noise = FastNoiseLite.new()
+
+
 func _ready():
 	generateEmptyArray()
-	
+	noise.seed = randi()
 	generateTerrain()
 	createChunks()
 
-
-
 func generateEmptyArray():
-	for x in range(SIZEINCHUNKS*4):
+	for x in range(SIZEINCHUNKS*8):
 		planetData.append([])
-		for y in range(SIZEINCHUNKS*4):
+		for y in range(SIZEINCHUNKS*8):
 			planetData[x].append(0)
 	
-	centerPoint = Vector2(SIZEINCHUNKS*2,SIZEINCHUNKS*2) - Vector2(0.5,0.5)
-	
-func generateTerrain():
-	for x in range(SIZEINCHUNKS*4):
-		for y in range(SIZEINCHUNKS*4):
-			#planetData[x][y] = getBlockPosition(x,y)
-			
-			if getBlockDistance(x,y) <= 37:
-				planetData[x][y] = 3
-			
-			if getBlockDistance(x,y) <= 36:
-				planetData[x][y] = 2
-			
-			if getBlockDistance(x,y) <= 32:
-				planetData[x][y] = 1
-			
-			if getBlockDistance(x,y) <= 2:
-				planetData[x][y] = 4
+	centerPoint = Vector2(SIZEINCHUNKS*4,SIZEINCHUNKS*4) - Vector2(0.5,0.5)
 
+
+func generateTerrain():
+	for x in range(SIZEINCHUNKS*8):
+		for y in range(SIZEINCHUNKS*8):
+			#planetData[x][y] = getBlockPosition(x,y)
+			var quad = getBlockPosition(x,y)
+			var side = Vector2(x,y).rotated((PI/2)*quad).x
+			var surface = (noise.get_noise_1d(side*2.0)*4.0) + (SIZEINCHUNKS*2)
+			
+			if getBlockDistance(x,y) <= surface:
+				planetData[x][y] = 1
+			elif getBlockDistance(x,y) <= surface + 4:
+				planetData[x][y] = 2
+			elif getBlockDistance(x,y) <= surface + 5:
+				planetData[x][y] = 3
+			if getBlockDistance(x,y) <= 4:
+				planetData[x][y] = 4
+			
+			
 func createChunks():
 	for x in range(SIZEINCHUNKS):
 		for y in range(SIZEINCHUNKS):
 			var newChunk = chunkScene.instantiate()
 			newChunk.pos = Vector2(x,y)
-			newChunk.position = (Vector2(x,y) * 32) - Vector2(SIZEINCHUNKS*16,SIZEINCHUNKS*16)
+			newChunk.position = (Vector2(x,y) * 64) - Vector2(SIZEINCHUNKS*32,SIZEINCHUNKS*32)
 			chunkContainer.add_child(newChunk)
 
 func getBlockPosition(x,y):
@@ -66,3 +69,5 @@ func getBlockDistance(x,y):
 	newPos = newPos.rotated((PI/2)*-quadtrant)
 	return -newPos.y
 
+func getBlockRoundedDistance(x,y):
+	return (Vector2(x,y) - centerPoint).length()

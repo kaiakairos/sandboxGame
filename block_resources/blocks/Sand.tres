@@ -1,0 +1,12 @@
+[gd_resource type="Resource" script_class="Block" load_steps=3 format=3 uid="uid://mh46ggcag7ls"]
+
+[ext_resource type="Script" path="res://block_resources/Block.gd" id="1_nssok"]
+[ext_resource type="Texture2D" uid="uid://c7sbh71uicxar" path="res://block_resources/block_textures/sand.png" id="2_myb6w"]
+
+[resource]
+script = ExtResource("1_nssok")
+texture = ExtResource("2_myb6w")
+rotateTextureToGravity = false
+connectedTexture = false
+hasCollision = true
+testWiggle = true

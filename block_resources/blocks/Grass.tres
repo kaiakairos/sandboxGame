@@ -9,3 +9,4 @@ texture = ExtResource("2_qxu5n")
 rotateTextureToGravity = false
 connectedTexture = true
 hasCollision = true
+testWiggle = true

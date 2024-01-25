@@ -6,4 +6,5 @@ var data = {
 	2:load("res://block_resources/blocks/Dirt.tres"),
 	3:load("res://block_resources/blocks/Grass.tres"),
 	4:load("res://block_resources/blocks/Core.tres"),
+	5:load("res://block_resources/blocks/Sand.tres"),
 }
