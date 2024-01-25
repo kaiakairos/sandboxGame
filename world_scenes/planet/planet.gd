@@ -3,7 +3,7 @@ extends Node2D
 @onready var chunkContainer = $ChunkContainer
 var chunkScene = preload("res://world_scenes/chunk/chunk.tscn")
 
-const SIZEINCHUNKS = 8 # (size * 4)^2 = number of tiles
+const SIZEINCHUNKS = 32 # (size * 4)^2 = number of tiles
 
 
 var planetData = []
@@ -11,8 +11,11 @@ var centerPoint = Vector2.ZERO
 
 func _ready():
 	generateEmptyArray()
+	
 	generateTerrain()
 	createChunks()
+
+
 
 func generateEmptyArray():
 	for x in range(SIZEINCHUNKS*4):
@@ -25,15 +28,15 @@ func generateEmptyArray():
 func generateTerrain():
 	for x in range(SIZEINCHUNKS*4):
 		for y in range(SIZEINCHUNKS*4):
-			#planetData[x][y] = getBlockPosition(x,y) + 1
+			#planetData[x][y] = getBlockPosition(x,y)
 			
-			if getBlockDistance(x,y) <= 13:
+			if getBlockDistance(x,y) <= 37:
 				planetData[x][y] = 3
 			
-			if getBlockDistance(x,y) <= 12:
+			if getBlockDistance(x,y) <= 36:
 				planetData[x][y] = 2
 			
-			if getBlockDistance(x,y) <= 10:
+			if getBlockDistance(x,y) <= 32:
 				planetData[x][y] = 1
 			
 			if getBlockDistance(x,y) <= 2:
@@ -62,3 +65,4 @@ func getBlockDistance(x,y):
 	var newPos = Vector2(x,y) - centerPoint
 	newPos = newPos.rotated((PI/2)*-quadtrant)
 	return -newPos.y
+

@@ -1,0 +1,31 @@
+[gd_scene load_steps=4 format=3 uid="uid://c1b1vgh12jqww"]
+
+[ext_resource type="Script" path="res://object_scenes/player/player.gd" id="1_7l8c2"]
+[ext_resource type="Texture2D" uid="uid://cc0s6j0tkpjn3" path="res://object_scenes/player/sprite.png" id="1_ly7mi"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_8s1yf"]
+size = Vector2(6, 6)
+
+[node name="Player" type="CharacterBody2D"]
+collision_layer = 2
+script = ExtResource("1_7l8c2")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+shape = SubResource("RectangleShape2D_8s1yf")
+
+[node name="Sprite" type="Sprite2D" parent="."]
+texture = ExtResource("1_ly7mi")
+offset = Vector2(0, -1)
+
+[node name="FloorAngles" type="Node2D" parent="."]
+
+[node name="FloorCast1" type="RayCast2D" parent="FloorAngles"]
+position = Vector2(-3, 3)
+target_position = Vector2(0, 1)
+
+[node name="FloorCast2" type="RayCast2D" parent="FloorAngles"]
+position = Vector2(3, 3)
+target_position = Vector2(0, 1)
+
+[node name="Camera2D" type="Camera2D" parent="."]
+ignore_rotation = false
