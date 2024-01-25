@@ -5,5 +5,9 @@
 
 [resource]
 script = ExtResource("1_vviry")
+blockId = 1
 texture = ExtResource("1_t7sq4")
 rotateTextureToGravity = false
+connectedTexture = false
+hasCollision = true
+testWiggle = false

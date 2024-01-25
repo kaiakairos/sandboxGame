@@ -7,25 +7,17 @@ const CHUNKSIZE = 8
 
 var pos = Vector2.ZERO
 
-var mainSector = true
 var onScreen = false
 
-func _ready():
-	createImage()
-	
-	mainSector = (int(pos.x) % 2)-(int(pos.y) % 2) == 0
-	
-	$Icon.self_modulate.r = int(mainSector)
+var id4 = 0
 
-func _process(delta):
-	if onScreen:
-		tickUpdate()
+func _ready():
+	drawData()
+
+	id4 = (int(pos.x) % 2)+((int(pos.y) % 2)*2)
+	set_process(false)
 
 func tickUpdate():
-	
-	#Make it so it properly pushes chunk updates to itself and neighboring chunks
-	#Consider passing change data to planet and having it do the updating.
-	
 	var planetData = get_parent().get_parent().planetData
 	var committedChanges = {}
 	for x in range(CHUNKSIZE):
@@ -39,14 +31,10 @@ func tickUpdate():
 				if !committedChanges.has(i):
 					committedChanges[i] = changeDictionary[i]
 	
-	for i in committedChanges.keys():
-		planetData[i.x][i.y] = committedChanges[i]
-	
-	if committedChanges.size() > 0:
-		createImage()
+	return committedChanges
 
 
-func createImage():
+func drawData():
 	#Texture
 	var img = Image.create(64,64,false,Image.FORMAT_RGBA8)
 	var shape = RectangleShape2D.new()

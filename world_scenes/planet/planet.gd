@@ -11,12 +11,34 @@ var centerPoint = Vector2.ZERO
 #Noise
 var noise = FastNoiseLite.new()
 
+var tick = 0
+
+var allChunks = []
+var chunkArray2D = []
 
 func _ready():
 	generateEmptyArray()
 	noise.seed = randi()
 	generateTerrain()
 	createChunks()
+
+func _process(delta):
+	tick += 1
+	var chunksToUpdate = []
+	for chunk in allChunks:
+		if !chunk.onScreen:
+			continue
+		if tick % 4 != chunk.id4:
+			continue
+
+		var committedChanges = chunk.tickUpdate()
+		for change in committedChanges.keys():
+			planetData[change.x][change.y] = committedChanges[change]
+			var foundChunk = chunkArray2D[change.x/8][change.y/8]
+			if !chunksToUpdate.has(foundChunk):
+				chunksToUpdate.append(foundChunk)
+	for chunk in chunksToUpdate:
+		chunk.drawData()
 
 func generateEmptyArray():
 	for x in range(SIZEINCHUNKS*8):
@@ -47,11 +69,14 @@ func generateTerrain():
 			
 func createChunks():
 	for x in range(SIZEINCHUNKS):
+		chunkArray2D.append([])
 		for y in range(SIZEINCHUNKS):
 			var newChunk = chunkScene.instantiate()
 			newChunk.pos = Vector2(x,y)
 			newChunk.position = (Vector2(x,y) * 64) - Vector2(SIZEINCHUNKS*32,SIZEINCHUNKS*32)
 			chunkContainer.add_child(newChunk)
+			allChunks.append(newChunk)
+			chunkArray2D[x].append(newChunk)
 
 func getBlockPosition(x,y):
 	var angle1 = Vector2(1,1)

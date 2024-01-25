@@ -5,6 +5,7 @@
 
 [resource]
 script = ExtResource("1_nssok")
+blockId = 5
 texture = ExtResource("2_myb6w")
 rotateTextureToGravity = false
 connectedTexture = false

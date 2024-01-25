@@ -5,6 +5,7 @@
 
 [resource]
 script = ExtResource("1_4tdpa")
+blockId = 3
 texture = ExtResource("2_qxu5n")
 rotateTextureToGravity = false
 connectedTexture = true
