@@ -11,5 +11,5 @@ rotateTextureToGravity = false
 connectedTexture = false
 hasCollision = false
 testWiggle = false
-lightMultiplier = 1.0
-lightEmmission = 0.0
+lightMultiplier = 0.99
+lightEmmission = 0.02

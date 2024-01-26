@@ -32,10 +32,14 @@ func tickUpdate():
 			var changeDictionary = blockData.onTick(worldPos.x,worldPos.y,planetData)
 			
 			var currentLight = lightData[worldPos.x][worldPos.y]
-			var lightR = lightData[worldPos.x+1][worldPos.y]
-			var lightL = lightData[worldPos.x-1][worldPos.y]
-			var lightT = lightData[worldPos.x][worldPos.y-1]
-			var lightB = lightData[worldPos.x][worldPos.y+1]
+			
+			var hasPosX = [int(lightData.size() > worldPos.x + 1),int((worldPos.x - 1)>=0)]
+			var hasPosY = [int(lightData.size() > worldPos.y + 1),int((worldPos.y - 1)>=0)]
+			
+			var lightR = lightData[worldPos.x+(1*hasPosX[0])][worldPos.y]
+			var lightL = lightData[worldPos.x-(1*hasPosX[1])][worldPos.y]
+			var lightB = lightData[worldPos.x][worldPos.y+(1*hasPosY[0])]
+			var lightT = lightData[worldPos.x][worldPos.y-(1*hasPosY[1])]
 			
 			var newLight = ((lightR+lightL+lightT+lightB)/4.0)*blockData.lightMultiplier
 			newLight = max(newLight,blockData.lightEmmission)
