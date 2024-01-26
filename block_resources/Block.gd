@@ -10,6 +10,8 @@ class_name Block
 @export var hasCollision : bool = true
 @export var testWiggle : bool = false
 
+@export var lightMultiplier : float = 0.9
+@export var lightEmmission : float = 0.0
 
 func onTick(x,y,data):
 	if testWiggle:

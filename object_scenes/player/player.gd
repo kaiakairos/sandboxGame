@@ -6,6 +6,11 @@ var rotated = 0
 
 var gravity = 1000
 
+var previousChunk = Vector2.ZERO
+
+func _ready():
+	GlobalRef.player = self
+
 func _process(delta):
 	
 	rotated = getPlanetPosition()
@@ -30,6 +35,9 @@ func _process(delta):
 	velocity = newVel.rotated(rotated*(PI/2))
 	
 	move_and_slide()
+	
+	
+	updateLight()
 
 func getPlanetPosition():
 	var angle1 = Vector2(1,1)
@@ -49,3 +57,10 @@ func isOnFloor():
 	if $FloorAngles/FloorCast2.is_colliding():
 		return true
 	return false
+
+func updateLight():
+	var currentChunk = Vector2(int(position.x+1024)/64,int(position.y+1024)/64)
+	if previousChunk != currentChunk:
+		$Lightmap.position = (currentChunk * 64) - Vector2(1024,1024) - Vector2(256,256)
+		GlobalRef.lightmap.pushUpdate(get_parent())
+	previousChunk = currentChunk

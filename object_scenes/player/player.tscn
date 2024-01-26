@@ -1,7 +1,8 @@
-[gd_scene load_steps=4 format=3 uid="uid://c1b1vgh12jqww"]
+[gd_scene load_steps=5 format=3 uid="uid://c1b1vgh12jqww"]
 
 [ext_resource type="Script" path="res://object_scenes/player/player.gd" id="1_7l8c2"]
 [ext_resource type="Texture2D" uid="uid://cc0s6j0tkpjn3" path="res://object_scenes/player/sprite.png" id="1_ly7mi"]
+[ext_resource type="PackedScene" uid="uid://cq6k7eeybndp6" path="res://object_scenes/lightmapCover/lightmap.tscn" id="3_37tb5"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_8s1yf"]
 size = Vector2(6, 6)
@@ -29,3 +30,6 @@ target_position = Vector2(0, 1)
 
 [node name="Camera2D" type="Camera2D" parent="."]
 ignore_rotation = false
+
+[node name="Lightmap" parent="." instance=ExtResource("3_37tb5")]
+top_level = true

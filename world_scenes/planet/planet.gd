@@ -6,6 +6,7 @@ var chunkScene = preload("res://world_scenes/chunk/chunk.tscn")
 const SIZEINCHUNKS = 32 # (size * 8)^2 = number of tiles
 
 var planetData = []
+var lightData = []
 var centerPoint = Vector2.ZERO
 
 #Noise
@@ -32,6 +33,11 @@ func _process(delta):
 			continue
 
 		var committedChanges = chunk.tickUpdate()
+		
+		if chunk.MUSTUPDATELIGHT:
+			GlobalRef.lightmap.pushUpdate(self)
+			chunk.MUSTUPDATELIGHT = false
+		
 		for change in committedChanges.keys():
 			planetData[change.x][change.y] = committedChanges[change]
 			var foundChunk = chunkArray2D[change.x/8][change.y/8]
@@ -43,8 +49,10 @@ func _process(delta):
 func generateEmptyArray():
 	for x in range(SIZEINCHUNKS*8):
 		planetData.append([])
+		lightData.append([])
 		for y in range(SIZEINCHUNKS*8):
 			planetData[x].append(0)
+			lightData[x].append(1.0)
 	
 	centerPoint = Vector2(SIZEINCHUNKS*4,SIZEINCHUNKS*4) - Vector2(0.5,0.5)
 
@@ -59,12 +67,16 @@ func generateTerrain():
 			
 			if getBlockDistance(x,y) <= surface:
 				planetData[x][y] = 1
+				lightData[x][y] = 0.0
 			elif getBlockDistance(x,y) <= surface + 4:
 				planetData[x][y] = 2
+				lightData[x][y] = 0.0
 			elif getBlockDistance(x,y) <= surface + 5:
 				planetData[x][y] = 3
+				lightData[x][y] = 0.0
 			if getBlockDistance(x,y) <= 4:
 				planetData[x][y] = 4
+				lightData[x][y] = 0.0
 			
 			
 func createChunks():

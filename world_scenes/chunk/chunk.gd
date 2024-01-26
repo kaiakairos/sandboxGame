@@ -11,6 +11,8 @@ var onScreen = false
 
 var id4 = 0
 
+var MUSTUPDATELIGHT = false
+
 func _ready():
 	drawData()
 
@@ -19,7 +21,9 @@ func _ready():
 
 func tickUpdate():
 	var planetData = get_parent().get_parent().planetData
+	var lightData = get_parent().get_parent().lightData
 	var committedChanges = {}
+	var lightChanged = false
 	for x in range(CHUNKSIZE):
 		for y in range(CHUNKSIZE):
 			var worldPos = Vector2(x+(pos.x*CHUNKSIZE),y+(pos.y*CHUNKSIZE))
@@ -27,9 +31,22 @@ func tickUpdate():
 			var blockData = BlockData.data[blockId]
 			var changeDictionary = blockData.onTick(worldPos.x,worldPos.y,planetData)
 			
+			var currentLight = lightData[worldPos.x][worldPos.y]
+			var lightR = lightData[worldPos.x+1][worldPos.y]
+			var lightL = lightData[worldPos.x-1][worldPos.y]
+			var lightT = lightData[worldPos.x][worldPos.y-1]
+			var lightB = lightData[worldPos.x][worldPos.y+1]
+			
+			var newLight = max(currentLight,((lightR+lightL+lightT+lightB)/4.0)*blockData.lightMultiplier)
+			newLight = max(newLight,blockData.lightEmmission)
+			lightData[worldPos.x][worldPos.y] = clamp(newLight,0.0,1.0)
+			
+			lightChanged = bool(max(int(abs(newLight - currentLight)>=0.00001),int(lightChanged)))
 			for i in changeDictionary.keys():
 				if !committedChanges.has(i):
 					committedChanges[i] = changeDictionary[i]
+	
+	MUSTUPDATELIGHT = lightChanged
 	
 	return committedChanges
 

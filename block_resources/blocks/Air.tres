@@ -5,6 +5,11 @@
 
 [resource]
 script = ExtResource("1_tahtf")
+blockId = 0
 texture = ExtResource("1_6yg6d")
 rotateTextureToGravity = false
+connectedTexture = false
 hasCollision = false
+testWiggle = false
+lightMultiplier = 1.0
+lightEmmission = 0.0
