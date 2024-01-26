@@ -7,4 +7,6 @@ var data = {
 	3:load("res://block_resources/blocks/Grass.tres"),
 	4:load("res://block_resources/blocks/Core.tres"),
 	5:load("res://block_resources/blocks/Sand.tres"),
+	6:load("res://block_resources/blocks/Torch.tres"),
+	7:load("res://block_resources/blocks/CaveAir.tres"),
 }

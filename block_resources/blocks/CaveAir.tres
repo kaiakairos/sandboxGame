@@ -1,0 +1,15 @@
+[gd_resource type="Resource" script_class="Block" load_steps=3 format=3 uid="uid://dkhuxuq2iulc0"]
+
+[ext_resource type="Script" path="res://block_resources/Block.gd" id="1_g2duh"]
+[ext_resource type="Texture2D" uid="uid://bhl6sag6atslx" path="res://block_resources/block_textures/air.png" id="2_akmnf"]
+
+[resource]
+script = ExtResource("1_g2duh")
+blockId = 7
+texture = ExtResource("2_akmnf")
+rotateTextureToGravity = false
+connectedTexture = false
+hasCollision = false
+testWiggle = false
+lightMultiplier = 1.0
+lightEmmission = 0.0

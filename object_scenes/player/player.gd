@@ -37,7 +37,19 @@ func _process(delta):
 	move_and_slide()
 	
 	
+	dig()
 	updateLight()
+
+func dig():
+	var mousePos = get_parent().get_local_mouse_position()
+	var tile = get_parent().posToTile(mousePos)
+	
+	if Input.is_action_just_pressed("mouse_left"):
+		get_parent().editTiles({tile:get_parent().airOrCaveAir(tile.x,tile.y)})
+	if Input.is_action_just_pressed("mouse_right"):
+		get_parent().editTiles({tile:6})
+	if Input.is_action_just_pressed("inventory"):
+		get_parent().editTiles({tile:1})
 
 func getPlanetPosition():
 	var angle1 = Vector2(1,1)

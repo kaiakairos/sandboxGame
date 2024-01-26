@@ -37,11 +37,15 @@ func tickUpdate():
 			var lightT = lightData[worldPos.x][worldPos.y-1]
 			var lightB = lightData[worldPos.x][worldPos.y+1]
 			
-			var newLight = max(currentLight,((lightR+lightL+lightT+lightB)/4.0)*blockData.lightMultiplier)
+			var newLight = ((lightR+lightL+lightT+lightB)/4.0)*blockData.lightMultiplier
 			newLight = max(newLight,blockData.lightEmmission)
+			
+			#if blockId == 0:
+			#	newLight = max(blockData.lightEmmission,((lightR+lightL+lightT+lightB)/4.0)*blockData.lightMultiplier)
+			
 			lightData[worldPos.x][worldPos.y] = clamp(newLight,0.0,1.0)
 			
-			lightChanged = bool(max(int(abs(newLight - currentLight)>=0.00001),int(lightChanged)))
+			lightChanged = bool(max(int(abs(newLight - currentLight)>=0.001),int(lightChanged)))
 			for i in changeDictionary.keys():
 				if !committedChanges.has(i):
 					committedChanges[i] = changeDictionary[i]

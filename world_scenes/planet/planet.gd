@@ -7,6 +7,7 @@ const SIZEINCHUNKS = 32 # (size * 8)^2 = number of tiles
 
 var planetData = []
 var lightData = []
+var skyLightData = []
 var centerPoint = Vector2.ZERO
 
 #Noise
@@ -26,6 +27,7 @@ func _ready():
 func _process(delta):
 	tick += 1
 	var chunksToUpdate = []
+	var shouldUpdateLight = 0
 	for chunk in allChunks:
 		if !chunk.onScreen:
 			continue
@@ -34,28 +36,58 @@ func _process(delta):
 
 		var committedChanges = chunk.tickUpdate()
 		
-		if chunk.MUSTUPDATELIGHT:
-			GlobalRef.lightmap.pushUpdate(self)
-			chunk.MUSTUPDATELIGHT = false
+		shouldUpdateLight += int(chunk.MUSTUPDATELIGHT)
+		chunk.MUSTUPDATELIGHT = false
 		
 		for change in committedChanges.keys():
 			planetData[change.x][change.y] = committedChanges[change]
 			var foundChunk = chunkArray2D[change.x/8][change.y/8]
 			if !chunksToUpdate.has(foundChunk):
 				chunksToUpdate.append(foundChunk)
+	
+	if shouldUpdateLight > 0:
+		GlobalRef.lightmap.pushUpdate(self)
+	
 	for chunk in chunksToUpdate:
 		chunk.drawData()
 
+func editTiles(changeCommit):
+	var chunksToUpdate = []
+	for change in changeCommit.keys():
+		planetData[change.x][change.y] = changeCommit[change]
+		var foundChunk = chunkArray2D[change.x/8][change.y/8]
+		if !chunksToUpdate.has(foundChunk):
+			chunksToUpdate.append(foundChunk)
+	for chunk in chunksToUpdate:
+		chunk.drawData()
+
+func posToTile(pos):
+	var planetRadius = SIZEINCHUNKS * 32 #32 is (chunk size * tile size)/2
+	var relativePos = pos + Vector2(planetRadius,planetRadius)
+	var sizeInTiles = SIZEINCHUNKS * 8
+	
+	var tilePos = Vector2(int(relativePos.x)/8,int(relativePos.y)/8)
+	if tilePos.x < 0 or tilePos.y < 0 or tilePos.x >= sizeInTiles or tilePos.y >= sizeInTiles:
+		return null
+	
+	return tilePos
+	
 func generateEmptyArray():
 	for x in range(SIZEINCHUNKS*8):
 		planetData.append([])
 		lightData.append([])
+		skyLightData.append([])
 		for y in range(SIZEINCHUNKS*8):
 			planetData[x].append(0)
-			lightData[x].append(1.0)
+			lightData[x].append(0.0)
+			skyLightData[x].append(1.0)
 	
 	centerPoint = Vector2(SIZEINCHUNKS*4,SIZEINCHUNKS*4) - Vector2(0.5,0.5)
 
+func airOrCaveAir(x,y):
+	var surface = SIZEINCHUNKS*2
+	#Returns 7 for cave air or 0 for surface air
+	return int(getBlockDistance(x,y) <= surface - 2) * 7
 
 func generateTerrain():
 	for x in range(SIZEINCHUNKS*8):
