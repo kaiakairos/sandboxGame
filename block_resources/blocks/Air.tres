@@ -12,4 +12,4 @@ connectedTexture = false
 hasCollision = false
 testWiggle = false
 lightMultiplier = 0.97
-lightEmmission = 0.4
+lightEmmission = 0.5

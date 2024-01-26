@@ -40,7 +40,7 @@ func _process(delta):
 		chunk.MUSTUPDATELIGHT = false
 		
 		for change in committedChanges.keys():
-			planetData[change.x][change.y] = committedChanges[change]
+			planetData[change.x][change.y][int(change.z)] = committedChanges[change]
 			var foundChunk = chunkArray2D[change.x/8][change.y/8]
 			if !chunksToUpdate.has(foundChunk):
 				chunksToUpdate.append(foundChunk)
@@ -54,7 +54,7 @@ func _process(delta):
 func editTiles(changeCommit):
 	var chunksToUpdate = []
 	for change in changeCommit.keys():
-		planetData[change.x][change.y] = changeCommit[change]
+		planetData[change.x][change.y][int(change.z)] = changeCommit[change]
 		var foundChunk = chunkArray2D[change.x/8][change.y/8]
 		if !chunksToUpdate.has(foundChunk):
 			chunksToUpdate.append(foundChunk)
@@ -78,7 +78,7 @@ func generateEmptyArray():
 		lightData.append([])
 		skyLightData.append([])
 		for y in range(SIZEINCHUNKS*8):
-			planetData[x].append(0)
+			planetData[x].append([0,0]) # TILE LAYER, BACKGROUND LAYER
 			lightData[x].append(0.0)
 			skyLightData[x].append(1.0)
 	
@@ -98,16 +98,20 @@ func generateTerrain():
 			var surface = (noise.get_noise_1d(side*2.0)*4.0) + (SIZEINCHUNKS*2)
 			
 			if getBlockDistance(x,y) <= surface:
-				planetData[x][y] = 1
+				planetData[x][y][0] = 1
+				planetData[x][y][1] = 1
 				lightData[x][y] = 0.0
 			elif getBlockDistance(x,y) <= surface + 4:
-				planetData[x][y] = 2
+				planetData[x][y][0] = 2
+				planetData[x][y][1] = 2
 				lightData[x][y] = 0.0
 			elif getBlockDistance(x,y) <= surface + 5:
-				planetData[x][y] = 3
+				planetData[x][y][0] = 3
+				planetData[x][y][1] = 3
 				lightData[x][y] = 0.0
 			if getBlockDistance(x,y) <= 4:
-				planetData[x][y] = 4
+				planetData[x][y][0] = 4
+				planetData[x][y][1] = 4
 				lightData[x][y] = 0.0
 			
 			

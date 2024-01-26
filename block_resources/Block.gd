@@ -13,8 +13,8 @@ class_name Block
 @export var lightMultiplier : float = 0.9
 @export var lightEmmission : float = 0.0
 
-func onTick(x,y,data):
+func onTick(x,y,data,layer):
 	if testWiggle:
 		if data[x][y-1] == 0:
-			return {Vector2(x,y):0,Vector2(x,y-1):blockId}
+			return {Vector3(x,y,layer):0,Vector3(x,y-1,layer):blockId}
 	return {}

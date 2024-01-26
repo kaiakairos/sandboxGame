@@ -1,6 +1,7 @@
 extends Node2D
 
-@onready var sprite = $Sprite2D
+@onready var mainLayerSprite = $mainLayer
+@onready var backLayerSprite = $backLayer
 @onready var body = $StaticBody2D
 
 const CHUNKSIZE = 8
@@ -27,9 +28,9 @@ func tickUpdate():
 	for x in range(CHUNKSIZE):
 		for y in range(CHUNKSIZE):
 			var worldPos = Vector2(x+(pos.x*CHUNKSIZE),y+(pos.y*CHUNKSIZE))
-			var blockId = planetData[worldPos.x][worldPos.y]
+			var blockId = planetData[worldPos.x][worldPos.y][0]
 			var blockData = BlockData.data[blockId]
-			var changeDictionary = blockData.onTick(worldPos.x,worldPos.y,planetData)
+			var changeDictionary = blockData.onTick(worldPos.x,worldPos.y,planetData,0)
 			
 			var currentLight = lightData[worldPos.x][worldPos.y]
 			
@@ -62,6 +63,7 @@ func tickUpdate():
 func drawData():
 	#Texture
 	var img = Image.create(64,64,false,Image.FORMAT_RGBA8)
+	var backImg = Image.create(64,64,false,Image.FORMAT_RGBA8)
 	var shape = RectangleShape2D.new()
 	shape.size = Vector2(8,8)
 	
@@ -70,21 +72,33 @@ func drawData():
 	for x in range(CHUNKSIZE):
 		for y in range(CHUNKSIZE):
 			var worldPos = Vector2(x+(pos.x*CHUNKSIZE),y+(pos.y*CHUNKSIZE))
-			var blockId = planetData[worldPos.x][worldPos.y]
+			var blockId = planetData[worldPos.x][worldPos.y][0]
 			var blockImg = BlockData.data[blockId].texture.get_image()
 			blockImg.convert(Image.FORMAT_RGBA8)
+			
+			var backBlockId = planetData[worldPos.x][worldPos.y][1]
+			var backBlockImg = BlockData.data[backBlockId].texture.get_image()
+			backBlockImg.convert(Image.FORMAT_RGBA8)
 			
 			if BlockData.data[blockId].rotateTextureToGravity:
 				for i in range(getBlockPosition(worldPos.x,worldPos.y)):
 					blockImg.rotate_90(0)
+			if BlockData.data[backBlockId].rotateTextureToGravity:
+				for i in range(getBlockPosition(worldPos.x,worldPos.y)):
+					backBlockImg.rotate_90(0)
 			
 			var blockRect = Rect2i(0, 0, 8, 8)
 			if BlockData.data[blockId].connectedTexture:
-				var frame = scanBlockOpen(planetData,worldPos.x,worldPos.y)
+				var frame = scanBlockOpen(planetData,worldPos.x,worldPos.y,0)
 				blockRect = Rect2i(frame, 0, 8, 8)
+			var backBlockRect = Rect2i(0, 0, 8, 8)
+			if BlockData.data[backBlockId].connectedTexture:
+				var frame = scanBlockOpen(planetData,worldPos.x,worldPos.y,1)
+				backBlockRect = Rect2i(frame, 0, 8, 8)
 			
 			var pos = Vector2(x*8,y*8)
 			img.blend_rect(blockImg,blockRect,Vector2i(pos.x,pos.y))
+			backImg.blend_rect(backBlockImg,blockRect,Vector2i(pos.x,pos.y))
 			
 			var blockHasCollision = int(BlockData.data[blockId].hasCollision)
 			if blockHasCollision:
@@ -93,7 +107,8 @@ func drawData():
 				collider.position = pos + Vector2(4,4)
 				body.add_child(collider)
 		
-	sprite.texture = ImageTexture.create_from_image(img)
+	mainLayerSprite.texture = ImageTexture.create_from_image(img)
+	backLayerSprite.texture = ImageTexture.create_from_image(backImg)
 
 func getBlockPosition(x,y):
 	var angle1 = Vector2(1,1)
@@ -105,20 +120,20 @@ func getBlockPosition(x,y):
 	
 	return [0,1,3,2][dot1 + dot2]
 
-func scanBlockOpen(planetData,x,y):
+func scanBlockOpen(planetData,x,y,layer):
 	var openL = 1
 	var openR = 2
 	var openT = 4
 	var openB = 8
 	
 	if x != 0:
-		openL = int(!BlockData.data[planetData[x-1][y]].hasCollision) * 1
+		openL = int(!BlockData.data[planetData[x-1][y][layer]].hasCollision) * 1
 	if x != planetData.size()-1:
-		openR = int(!BlockData.data[planetData[x+1][y]].hasCollision) * 2
+		openR = int(!BlockData.data[planetData[x+1][y][layer]].hasCollision) * 2
 	if y != 0:
-		openT = int(!BlockData.data[planetData[x][y-1]].hasCollision) * 4
+		openT = int(!BlockData.data[planetData[x][y-1][layer]].hasCollision) * 4
 	if y != planetData.size()-1:
-		openB = int(!BlockData.data[planetData[x][y+1]].hasCollision) * 8
+		openB = int(!BlockData.data[planetData[x][y+1][layer]].hasCollision) * 8
 	
 	return (openL+openR+openT+openB) * 8
 

@@ -12,14 +12,17 @@ void fragment() {
 	float alphaMask = texture(mask_texture,UV).a;
 	vec4 tex = texture(TEXTURE,UV);
 	vec4 new = tex;
-	new.r = tex.r*9.0;
-	new.g = tex.g*8.2;
-	new.b = tex.b*9.5;
 	
-	new = clamp(new,vec4(0.0),vec4(1.0));
-	new = floor(new * 10.0)/10.0;
+	if (screen.rgb != vec3(0.0,1.0,0.0)){
+		new.r = tex.r*9.0;
+		new.g = tex.g*8.2;
+		new.b = tex.b*9.5;
 	
-	COLOR = multiply(screen,new);
-	COLOR.a = alphaMask;
+		new = clamp(new,vec4(0.0),vec4(1.0));
+		new = floor(new * 10.0)/10.0;
+	
+		COLOR = multiply(screen,new);
+	}
+	else{COLOR = screen;}
 }
 

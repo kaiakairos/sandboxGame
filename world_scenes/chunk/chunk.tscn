@@ -7,6 +7,7 @@
 script = ExtResource("1_2ne51")
 
 [node name="backLayer" type="Sprite2D" parent="."]
+modulate = Color(0.568627, 0.568627, 0.729412, 1)
 z_index = -5
 centered = false
 
