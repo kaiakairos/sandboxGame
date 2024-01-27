@@ -1,0 +1,16 @@
+[gd_resource type="Resource" script_class="BlockLiquid" load_steps=3 format=3 uid="uid://cbjqfr6yn1lpq"]
+
+[ext_resource type="Script" path="res://block_resources/block_classes/BlockLiquid.gd" id="1_d0h3p"]
+[ext_resource type="Texture2D" uid="uid://l2w4vfrfio3u" path="res://block_resources/block_textures/lava.png" id="2_wcirv"]
+
+[resource]
+script = ExtResource("1_d0h3p")
+harmful = true
+blockId = 9
+texture = ExtResource("2_wcirv")
+rotateTextureToGravity = false
+connectedTexture = true
+texturesConnectToMe = true
+hasCollision = false
+lightMultiplier = 0.95
+lightEmmission = 0.2

@@ -7,7 +7,6 @@ const SIZEINCHUNKS = 32 # (size * 8)^2 = number of tiles
 
 var planetData = []
 var lightData = []
-var skyLightData = []
 var centerPoint = Vector2.ZERO
 
 #Noise
@@ -24,7 +23,7 @@ func _ready():
 	generateTerrain()
 	createChunks()
 
-func _process(delta):
+func _physics_process(delta):
 	tick += 1
 	var chunksToUpdate = []
 	var shouldUpdateLight = 0
@@ -76,11 +75,9 @@ func generateEmptyArray():
 	for x in range(SIZEINCHUNKS*8):
 		planetData.append([])
 		lightData.append([])
-		skyLightData.append([])
 		for y in range(SIZEINCHUNKS*8):
 			planetData[x].append([0,0]) # TILE LAYER, BACKGROUND LAYER
 			lightData[x].append(0.0)
-			skyLightData[x].append(1.0)
 	
 	centerPoint = Vector2(SIZEINCHUNKS*4,SIZEINCHUNKS*4) - Vector2(0.5,0.5)
 

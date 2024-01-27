@@ -12,6 +12,7 @@ z_index = -5
 centered = false
 
 [node name="mainLayer" type="Sprite2D" parent="."]
+z_index = 1
 centered = false
 
 [node name="StaticBody2D" type="StaticBody2D" parent="."]

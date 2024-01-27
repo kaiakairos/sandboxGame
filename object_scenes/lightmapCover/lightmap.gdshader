@@ -23,6 +23,8 @@ void fragment() {
 	
 		COLOR = multiply(screen,new);
 	}
-	else{COLOR = screen;}
+	else{COLOR = screen;
+	COLOR.g = 0.0;
+	}
 }
 

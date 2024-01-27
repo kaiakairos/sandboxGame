@@ -30,7 +30,7 @@ func tickUpdate():
 			var worldPos = Vector2(x+(pos.x*CHUNKSIZE),y+(pos.y*CHUNKSIZE))
 			var blockId = planetData[worldPos.x][worldPos.y][0]
 			var blockData = BlockData.data[blockId]
-			var changeDictionary = blockData.onTick(worldPos.x,worldPos.y,planetData,0)
+			var changeDictionary = blockData.onTick(worldPos.x,worldPos.y,planetData,0,getBlockPosition(worldPos.x,worldPos.y))
 			
 			var currentLight = lightData[worldPos.x][worldPos.y]
 			
@@ -51,8 +51,13 @@ func tickUpdate():
 			lightData[worldPos.x][worldPos.y] = clamp(newLight,0.0,1.0)
 			
 			lightChanged = bool(max(int(abs(newLight - currentLight)>=0.001),int(lightChanged)))
+			
+			var toss = false
 			for i in changeDictionary.keys():
-				if !committedChanges.has(i):
+				if committedChanges.has(i):
+					toss = true
+			if !toss:
+				for i in changeDictionary.keys():
 					committedChanges[i] = changeDictionary[i]
 	
 	MUSTUPDATELIGHT = lightChanged
@@ -98,7 +103,7 @@ func drawData():
 			
 			var pos = Vector2(x*8,y*8)
 			img.blend_rect(blockImg,blockRect,Vector2i(pos.x,pos.y))
-			backImg.blend_rect(backBlockImg,blockRect,Vector2i(pos.x,pos.y))
+			backImg.blend_rect(backBlockImg,backBlockRect,Vector2i(pos.x,pos.y))
 			
 			var blockHasCollision = int(BlockData.data[blockId].hasCollision)
 			if blockHasCollision:
@@ -127,13 +132,13 @@ func scanBlockOpen(planetData,x,y,layer):
 	var openB = 8
 	
 	if x != 0:
-		openL = int(!BlockData.data[planetData[x-1][y][layer]].hasCollision) * 1
+		openL = int(!BlockData.data[planetData[x-1][y][layer]].texturesConnectToMe) * 1
 	if x != planetData.size()-1:
-		openR = int(!BlockData.data[planetData[x+1][y][layer]].hasCollision) * 2
+		openR = int(!BlockData.data[planetData[x+1][y][layer]].texturesConnectToMe) * 2
 	if y != 0:
-		openT = int(!BlockData.data[planetData[x][y-1][layer]].hasCollision) * 4
+		openT = int(!BlockData.data[planetData[x][y-1][layer]].texturesConnectToMe) * 4
 	if y != planetData.size()-1:
-		openB = int(!BlockData.data[planetData[x][y+1][layer]].hasCollision) * 8
+		openB = int(!BlockData.data[planetData[x][y+1][layer]].texturesConnectToMe) * 8
 	
 	return (openL+openR+openT+openB) * 8
 

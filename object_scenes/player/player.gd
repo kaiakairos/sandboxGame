@@ -48,9 +48,9 @@ func dig():
 		if Input.is_action_just_pressed("mouse_left"):
 			get_parent().editTiles({edit:get_parent().airOrCaveAir(tile.x,tile.y)})
 		if Input.is_action_just_pressed("mouse_right"):
-			get_parent().editTiles({edit:6})
+			get_parent().editTiles({edit:9})
 		if Input.is_action_just_pressed("inventory"):
-			get_parent().editTiles({edit:1})
+			get_parent().editTiles({edit:8})
 
 func getPlanetPosition():
 	var angle1 = Vector2(1,1)

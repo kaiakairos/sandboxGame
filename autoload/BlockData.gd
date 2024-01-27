@@ -9,4 +9,6 @@ var data = {
 	5:load("res://block_resources/blocks/Sand.tres"),
 	6:load("res://block_resources/blocks/Torch.tres"),
 	7:load("res://block_resources/blocks/CaveAir.tres"),
+	8:load("res://block_resources/blocks/Water.tres"),
+	9:load("res://block_resources/blocks/Lava.tres"),
 }

@@ -10,6 +10,6 @@ texture = ExtResource("2_rlmif")
 rotateTextureToGravity = false
 connectedTexture = false
 hasCollision = false
-testWiggle = false
+testWiggle = true
 lightMultiplier = 1.0
 lightEmmission = 1.0
