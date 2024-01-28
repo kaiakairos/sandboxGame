@@ -24,7 +24,8 @@ func pushUpdate(planet,newPos):
 	if thread != null:
 		if thread.is_alive():
 			return
-	var relativePos = (newPos - planet.global_position) + Vector2(1024,1024)
+	var pSize = planet.SIZEINCHUNKS * 32 #Pixel diameter of planet
+	var relativePos = (newPos - planet.global_position) + Vector2(pSize,pSize)
 	thread = Thread.new()
 	var newX = int(relativePos.x)/8
 	var newY = int(relativePos.y)/8
@@ -47,8 +48,10 @@ func updateLight(x,y,planet,newPos):
 	var airImg = Image.create(size,size,false,Image.FORMAT_LA8)
 	for imgX in range(size):
 		for imgY in range(size):
-			var l = data[x+imgX][y+imgY]
-			var isAir = blockData[x+imgX][y+imgY][0] == 0 and blockData[x+imgX][y+imgY][1] == 0
+			var newX = clamp(x+imgX,0,data.size()-1)
+			var newY = clamp(y+imgY,0,data.size()-1)
+			var l = data[newX][newY]
+			var isAir = blockData[newX][newY][0] == 0 and blockData[newX][newY][1] == 0
 			img.set_pixel(imgX,imgY,Color(l,l,l,1.0))
 			airImg.set_pixel(imgX,imgY,Color(0,0,0,int(!isAir)))
 			

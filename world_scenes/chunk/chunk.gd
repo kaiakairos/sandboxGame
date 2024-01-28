@@ -23,6 +23,9 @@ func _ready():
 	drawData()
 
 	id4 = (int(pos.x) % 2)+((int(pos.y) % 2)*2)
+	
+	#id4 = (pos.x % 2)+((pos.y % 4)*2)
+	
 	set_process(false)
 
 func tickUpdate():
