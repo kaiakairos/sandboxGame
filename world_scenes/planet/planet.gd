@@ -7,6 +7,7 @@ const SIZEINCHUNKS = 32 # (size * 8)^2 = number of tiles
 
 var planetData = []
 var lightData = []
+var positionLookup = []
 var centerPoint = Vector2.ZERO
 
 #Noise
@@ -16,6 +17,8 @@ var tick = 0
 
 var allChunks = []
 var chunkArray2D = []
+
+var visibleChunks = []
 
 func _ready():
 	generateEmptyArray()
@@ -27,9 +30,7 @@ func _physics_process(delta):
 	tick += 1
 	var chunksToUpdate = []
 	var shouldUpdateLight = 0
-	for chunk in allChunks:
-		if !chunk.onScreen:
-			continue
+	for chunk in visibleChunks:
 		if tick % 4 != chunk.id4:
 			continue
 
@@ -72,14 +73,16 @@ func posToTile(pos):
 	return tilePos
 	
 func generateEmptyArray():
+	centerPoint = Vector2(SIZEINCHUNKS*4,SIZEINCHUNKS*4) - Vector2(0.5,0.5)
+	
 	for x in range(SIZEINCHUNKS*8):
 		planetData.append([])
 		lightData.append([])
+		positionLookup.append([])
 		for y in range(SIZEINCHUNKS*8):
 			planetData[x].append([0,0]) # TILE LAYER, BACKGROUND LAYER
 			lightData[x].append(0.0)
-	
-	centerPoint = Vector2(SIZEINCHUNKS*4,SIZEINCHUNKS*4) - Vector2(0.5,0.5)
+			positionLookup[x].append(getBlockPosition(x,y))
 
 func airOrCaveAir(x,y):
 	var surface = SIZEINCHUNKS*2
@@ -90,7 +93,7 @@ func generateTerrain():
 	for x in range(SIZEINCHUNKS*8):
 		for y in range(SIZEINCHUNKS*8):
 			#planetData[x][y] = getBlockPosition(x,y)
-			var quad = getBlockPosition(x,y)
+			var quad = positionLookup[x][y]
 			var side = Vector2(x,y).rotated((PI/2)*quad).x
 			var surface = (noise.get_noise_1d(side*2.0)*4.0) + (SIZEINCHUNKS*2)
 			
@@ -106,10 +109,7 @@ func generateTerrain():
 				planetData[x][y][0] = 3
 				planetData[x][y][1] = 3
 				lightData[x][y] = 0.0
-			if getBlockDistance(x,y) <= 4:
-				planetData[x][y][0] = 4
-				planetData[x][y][1] = 4
-				lightData[x][y] = 0.0
+			
 			
 			
 func createChunks():
@@ -134,7 +134,7 @@ func getBlockPosition(x,y):
 	return [0,1,3,2][dot1 + dot2]
 
 func getBlockDistance(x,y):
-	var quadtrant = getBlockPosition(x,y)
+	var quadtrant = positionLookup[x][y]
 	var newPos = Vector2(x,y) - centerPoint
 	newPos = newPos.rotated((PI/2)*-quadtrant)
 	return -newPos.y

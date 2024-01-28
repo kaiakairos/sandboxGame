@@ -14,15 +14,20 @@ var id4 = 0
 
 var MUSTUPDATELIGHT = false
 
+var planet = null
+
 func _ready():
+	
+	planet = get_parent().get_parent()
+	
 	drawData()
 
 	id4 = (int(pos.x) % 2)+((int(pos.y) % 2)*2)
 	set_process(false)
 
 func tickUpdate():
-	var planetData = get_parent().get_parent().planetData
-	var lightData = get_parent().get_parent().lightData
+	var planetData = planet.planetData
+	var lightData = planet.lightData
 	var committedChanges = {}
 	var lightChanged = false
 	for x in range(CHUNKSIZE):
@@ -72,7 +77,7 @@ func drawData():
 	var shape = RectangleShape2D.new()
 	shape.size = Vector2(8,8)
 	
-	var planetData = get_parent().get_parent().planetData
+	var planetData = planet.planetData
 	clearCollisions()
 	for x in range(CHUNKSIZE):
 		for y in range(CHUNKSIZE):
@@ -101,29 +106,22 @@ func drawData():
 				var frame = scanBlockOpen(planetData,worldPos.x,worldPos.y,1)
 				backBlockRect = Rect2i(frame, 0, 8, 8)
 			
-			var pos = Vector2(x*8,y*8)
-			img.blend_rect(blockImg,blockRect,Vector2i(pos.x,pos.y))
-			backImg.blend_rect(backBlockImg,backBlockRect,Vector2i(pos.x,pos.y))
+			var imgPos = Vector2(x*8,y*8)
+			img.blend_rect(blockImg,blockRect,Vector2i(imgPos.x,imgPos.y))
+			backImg.blend_rect(backBlockImg,backBlockRect,Vector2i(imgPos.x,imgPos.y))
 			
 			var blockHasCollision = int(BlockData.data[blockId].hasCollision)
 			if blockHasCollision:
 				var collider = CollisionShape2D.new()
 				collider.shape = shape
-				collider.position = pos + Vector2(4,4)
+				collider.position = imgPos + Vector2(4,4)
 				body.add_child(collider)
 		
 	mainLayerSprite.texture = ImageTexture.create_from_image(img)
 	backLayerSprite.texture = ImageTexture.create_from_image(backImg)
 
 func getBlockPosition(x,y):
-	var angle1 = Vector2(1,1)
-	var angle2 = Vector2(-1,1)
-	var newPos = Vector2(x,y) - get_parent().get_parent().centerPoint
-	
-	var dot1 = int(newPos.dot(angle1) >= 0)
-	var dot2 = int(newPos.dot(angle2) > 0) * 2
-	
-	return [0,1,3,2][dot1 + dot2]
+	return planet.positionLookup[x][y]
 
 func scanBlockOpen(planetData,x,y,layer):
 	var openL = 1
@@ -149,8 +147,11 @@ func clearCollisions():
 func _on_visible_on_screen_notifier_2d_screen_entered():
 	body.set_process(true)
 	onScreen = true
+	if !planet.visibleChunks.has(self):
+		planet.visibleChunks.append(self)
 
 
 func _on_visible_on_screen_notifier_2d_screen_exited():
 	body.set_process(false)
 	onScreen = false
+	planet.visibleChunks.erase(self)

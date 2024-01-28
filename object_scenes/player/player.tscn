@@ -33,9 +33,9 @@ ignore_rotation = false
 
 [node name="ColorRect" type="ColorRect" parent="Camera2D"]
 z_index = -10
-offset_left = -131.0
-offset_top = -97.0
-offset_right = 135.0
+offset_left = -244.0
+offset_top = -98.0
+offset_right = 243.855
 offset_bottom = 100.0
 color = Color(0, 1, 0, 1)
 
