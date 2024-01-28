@@ -74,6 +74,12 @@ func isOnFloor():
 func updateLight():
 	var currentChunk = Vector2(int(position.x+1024)/64,int(position.y+1024)/64)
 	if previousChunk != currentChunk:
-		GlobalRef.lightmap.position = (currentChunk * 64) - Vector2(1024,1024) - Vector2(256,256)
-		GlobalRef.lightmap.pushUpdate(get_parent())
+		var newPos = (currentChunk * 64) - Vector2(1024,1024) - Vector2(256,256)
+		GlobalRef.lightmap.pushUpdate(get_parent(),newPos)
+	previousChunk = currentChunk
+
+func updateLightStatic():
+	var currentChunk = Vector2(int(position.x+1024)/64,int(position.y+1024)/64)
+	var newPos = (currentChunk * 64) - Vector2(1024,1024) - Vector2(256,256)
+	GlobalRef.lightmap.pushUpdate(get_parent(),newPos)
 	previousChunk = currentChunk

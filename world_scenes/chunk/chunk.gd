@@ -4,15 +4,15 @@ extends Node2D
 @onready var backLayerSprite = $backLayer
 @onready var body = $StaticBody2D
 
-const CHUNKSIZE = 8
+const CHUNKSIZE :int= 8
 
-var pos = Vector2.ZERO
+var pos :Vector2= Vector2.ZERO
 
-var onScreen = false
+var onScreen :bool= false
 
-var id4 = 0
+var id4 :int= 0
 
-var MUSTUPDATELIGHT = false
+var MUSTUPDATELIGHT :bool= false
 
 var planet = null
 
@@ -26,16 +26,16 @@ func _ready():
 	set_process(false)
 
 func tickUpdate():
-	var planetData = planet.planetData
-	var lightData = planet.lightData
-	var committedChanges = {}
-	var lightChanged = false
+	var planetData :Array= planet.planetData
+	var lightData :Array= planet.lightData
+	var committedChanges := {}
+	var lightChanged := false
 	for x in range(CHUNKSIZE):
 		for y in range(CHUNKSIZE):
-			var worldPos = Vector2(x+(pos.x*CHUNKSIZE),y+(pos.y*CHUNKSIZE))
-			var blockId = planetData[worldPos.x][worldPos.y][0]
-			var blockData = BlockData.data[blockId]
-			var changeDictionary = blockData.onTick(worldPos.x,worldPos.y,planetData,0,getBlockPosition(worldPos.x,worldPos.y))
+			var worldPos := Vector2(x+(pos.x*CHUNKSIZE),y+(pos.y*CHUNKSIZE))
+			var blockId :int= planetData[worldPos.x][worldPos.y][0]
+			var blockData :Resource= BlockData.data[blockId]
+			var changeDictionary :Dictionary= blockData.onTick(worldPos.x,worldPos.y,planetData,0,getBlockPosition(worldPos.x,worldPos.y))
 			
 			var currentLight = lightData[worldPos.x][worldPos.y]
 			
@@ -49,9 +49,6 @@ func tickUpdate():
 			
 			var newLight = ((lightR+lightL+lightT+lightB)/4.0)*blockData.lightMultiplier
 			newLight = max(newLight,blockData.lightEmmission)
-			
-			#if blockId == 0:
-			#	newLight = max(blockData.lightEmmission,((lightR+lightL+lightT+lightB)/4.0)*blockData.lightMultiplier)
 			
 			lightData[worldPos.x][worldPos.y] = clamp(newLight,0.0,1.0)
 			
@@ -97,7 +94,7 @@ func drawData():
 				for i in range(getBlockPosition(worldPos.x,worldPos.y)):
 					backBlockImg.rotate_90(0)
 			
-			var blockRect = Rect2i(0, 0, 8, 8)
+			var blockRect := Rect2i(0, 0, 8, 8)
 			if BlockData.data[blockId].connectedTexture:
 				var frame = scanBlockOpen(planetData,worldPos.x,worldPos.y,0)
 				blockRect = Rect2i(frame, 0, 8, 8)
@@ -124,10 +121,10 @@ func getBlockPosition(x,y):
 	return planet.positionLookup[x][y]
 
 func scanBlockOpen(planetData,x,y,layer):
-	var openL = 1
-	var openR = 2
-	var openT = 4
-	var openB = 8
+	var openL := 1
+	var openR := 2
+	var openT := 4
+	var openB := 8
 	
 	if x != 0:
 		openL = int(!BlockData.data[planetData[x-1][y][layer]].texturesConnectToMe) * 1
@@ -149,9 +146,12 @@ func _on_visible_on_screen_notifier_2d_screen_entered():
 	onScreen = true
 	if !planet.visibleChunks.has(self):
 		planet.visibleChunks.append(self)
-
+	mainLayerSprite.visible = onScreen
+	backLayerSprite.visible = onScreen
 
 func _on_visible_on_screen_notifier_2d_screen_exited():
 	body.set_process(false)
 	onScreen = false
 	planet.visibleChunks.erase(self)
+	mainLayerSprite.visible = onScreen
+	backLayerSprite.visible = onScreen

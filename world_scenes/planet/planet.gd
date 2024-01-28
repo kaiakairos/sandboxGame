@@ -46,7 +46,7 @@ func _physics_process(delta):
 				chunksToUpdate.append(foundChunk)
 	
 	if shouldUpdateLight > 0:
-		GlobalRef.lightmap.pushUpdate(self)
+		GlobalRef.player.updateLightStatic()
 	
 	for chunk in chunksToUpdate:
 		chunk.drawData()

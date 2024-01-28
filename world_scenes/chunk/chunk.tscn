@@ -22,7 +22,6 @@ collision_mask = 0
 rect = Rect2(-64, -64, 192, 192)
 
 [node name="Icon" type="Sprite2D" parent="."]
-visible = false
 self_modulate = Color(1, 1, 1, 0.156863)
 scale = Vector2(0.5, 0.5)
 texture = ExtResource("2_q03hc")
