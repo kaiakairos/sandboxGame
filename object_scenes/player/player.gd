@@ -1,5 +1,7 @@
 extends CharacterBody2D
 
+var system = null
+
 @onready var sprite = $Sprite
 
 var rotated = 0
@@ -8,11 +10,18 @@ var gravity = 1000
 
 var previousChunk = Vector2.ZERO
 
+var planet :Node2D = null
+
 func _ready():
 	GlobalRef.player = self
 
 func _process(delta):
-	
+	if is_instance_valid(planet):
+		planetMovement(delta)
+	else:
+		move_and_slide()
+
+func planetMovement(delta):
 	rotated = getPlanetPosition()
 	sprite.rotation = lerp_angle(sprite.rotation,rotated*(PI/2),0.4)
 	
@@ -29,7 +38,8 @@ func _process(delta):
 	
 	if Input.is_action_just_pressed("jump"):
 		newVel.y = -200
-	$Camera2D.rotation = lerp_angle($Camera2D.rotation,rotated*(PI/2),0.2)
+	if isOnFloor():
+		$Camera2D.rotation = lerp_angle($Camera2D.rotation,rotated*(PI/2),0.2)
 		
 		
 	velocity = newVel.rotated(rotated*(PI/2))
@@ -40,17 +50,23 @@ func _process(delta):
 	dig()
 	updateLight()
 
+
+
 func dig():
-	var mousePos = get_parent().get_local_mouse_position()
-	var tile = get_parent().posToTile(mousePos)
+	
+	if !is_instance_valid(planet):
+		return
+	
+	var mousePos = planet.get_local_mouse_position()
+	var tile = planet.posToTile(mousePos)
 	if tile != null:
 		var edit = Vector3(tile.x,tile.y,0)
 		if Input.is_action_just_pressed("mouse_left"):
-			get_parent().editTiles({edit:get_parent().airOrCaveAir(tile.x,tile.y)})
+			planet.editTiles({edit:planet.airOrCaveAir(tile.x,tile.y)})
 		if Input.is_action_just_pressed("mouse_right"):
-			get_parent().editTiles({edit:9})
+			planet.editTiles({edit:2})
 		if Input.is_action_just_pressed("inventory"):
-			get_parent().editTiles({edit:8})
+			planet.editTiles({edit:8})
 
 func getPlanetPosition():
 	var angle1 = Vector2(1,1)
@@ -72,14 +88,18 @@ func isOnFloor():
 	return false
 
 func updateLight():
+	if !is_instance_valid(planet):
+		return
 	var currentChunk = Vector2(int(position.x+1024)/64,int(position.y+1024)/64)
 	if previousChunk != currentChunk:
 		var newPos = (currentChunk * 64) - Vector2(1024,1024) - Vector2(256,256)
-		GlobalRef.lightmap.pushUpdate(get_parent(),newPos)
+		GlobalRef.lightmap.pushUpdate(planet,newPos)
 	previousChunk = currentChunk
 
 func updateLightStatic():
+	if !is_instance_valid(planet):
+		return
 	var currentChunk = Vector2(int(position.x+1024)/64,int(position.y+1024)/64)
 	var newPos = (currentChunk * 64) - Vector2(1024,1024) - Vector2(256,256)
-	GlobalRef.lightmap.pushUpdate(get_parent(),newPos)
+	GlobalRef.lightmap.pushUpdate(planet,newPos)
 	previousChunk = currentChunk

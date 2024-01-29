@@ -1,7 +1,6 @@
-[gd_scene load_steps=3 format=3 uid="uid://c5ikt4hqyhdoy"]
+[gd_scene load_steps=2 format=3 uid="uid://c5ikt4hqyhdoy"]
 
 [ext_resource type="Script" path="res://world_scenes/planet/planet.gd" id="1_8tc4r"]
-[ext_resource type="PackedScene" uid="uid://c1b1vgh12jqww" path="res://object_scenes/player/player.tscn" id="2_lqcua"]
 
 [node name="Planet" type="Node2D"]
 script = ExtResource("1_8tc4r")
@@ -11,9 +10,6 @@ script = ExtResource("1_8tc4r")
 [node name="ChunkContainer" type="Node2D" parent="."]
 
 [node name="EntityContainer" type="Node2D" parent="."]
-
-[node name="Player" parent="." instance=ExtResource("2_lqcua")]
-position = Vector2(0, -1024)
 
 [connection signal="screen_entered" from="isVisible" to="." method="_on_is_visible_screen_entered"]
 [connection signal="screen_exited" from="isVisible" to="." method="_on_is_visible_screen_exited"]

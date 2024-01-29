@@ -11,7 +11,7 @@ config_version=5
 [application]
 
 config/name="theSandbox"
-run/main_scene="res://world_scenes/planet/planet.tscn"
+run/main_scene="res://world_scenes/system/system.tscn"
 config/features=PackedStringArray("4.2", "GL Compatibility")
 run/max_fps=144
 config/icon="res://icon.svg"

@@ -1,6 +1,9 @@
 extends Node2D
 
+var system = null
+
 @onready var chunkContainer = $ChunkContainer
+@onready var entityContainer = $EntityContainer
 var chunkScene = preload("res://world_scenes/chunk/chunk.tscn")
 
 const SIZEINCHUNKS = 16 # (size * 8)^2 = number of tiles
@@ -48,7 +51,7 @@ func _physics_process(delta):
 			if !chunksToUpdate.has(foundChunk):
 				chunksToUpdate.append(foundChunk)
 	
-	if shouldUpdateLight > 0:
+	if shouldUpdateLight > 0 and is_instance_valid(GlobalRef.player):
 		GlobalRef.player.updateLightStatic()
 	
 	for chunk in chunksToUpdate:
@@ -157,7 +160,9 @@ func getBlockRoundedDistance(x,y):
 
 func _on_is_visible_screen_entered():
 	createChunks()
+	system.reparentToPlanet(GlobalRef.player,self)
 
 
 func _on_is_visible_screen_exited():
 	clearChunks()
+	system.dumpObjectToSpace(GlobalRef.player)

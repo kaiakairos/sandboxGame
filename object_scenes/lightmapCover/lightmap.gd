@@ -25,11 +25,13 @@ func pushUpdate(planet,newPos):
 		if thread.is_alive():
 			return
 	var pSize = planet.SIZEINCHUNKS * 32 #Pixel diameter of planet
+	newPos += planet.position
 	var relativePos = (newPos - planet.global_position) + Vector2(pSize,pSize)
 	thread = Thread.new()
 	var newX = int(relativePos.x)/8
 	var newY = int(relativePos.y)/8
 	#updateLight(int(relativePos.x)/8,int(relativePos.y)/8,planet)
+	
 	thread.start(updateLight.bind(newX,newY,planet,newPos))
 	thread.wait_to_finish()
 	position = newPos
@@ -61,4 +63,6 @@ func updateLight(x,y,planet,newPos):
 	return
 	
 func _exit_tree():
-	thread.wait_to_finish()
+	if thread != null:
+		if thread.is_alive():
+			thread.wait_to_finish()

@@ -1,0 +1,21 @@
+[gd_scene load_steps=4 format=3 uid="uid://dpnd8ekgo4bj3"]
+
+[ext_resource type="PackedScene" uid="uid://c5ikt4hqyhdoy" path="res://world_scenes/planet/planet.tscn" id="1_blgvb"]
+[ext_resource type="Script" path="res://world_scenes/system/system.gd" id="1_vw61b"]
+[ext_resource type="PackedScene" uid="uid://c1b1vgh12jqww" path="res://object_scenes/player/player.tscn" id="2_xgfnh"]
+
+[node name="System" type="Node2D"]
+script = ExtResource("1_vw61b")
+
+[node name="Objects" type="Node2D" parent="."]
+
+[node name="Player" parent="Objects" instance=ExtResource("2_xgfnh")]
+position = Vector2(-9, -477)
+
+[node name="CosmicBodies" type="Node2D" parent="."]
+
+[node name="Planet" parent="CosmicBodies" instance=ExtResource("1_blgvb")]
+position = Vector2(64, -64)
+
+[node name="Planet2" parent="CosmicBodies" instance=ExtResource("1_blgvb")]
+position = Vector2(2085, 0)
