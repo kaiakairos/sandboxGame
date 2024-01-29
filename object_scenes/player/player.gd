@@ -26,10 +26,10 @@ func _process(delta):
 	newVel.x = lerp(newVel.x,dir*100.0,0.2)
 	newVel.y += gravity * delta
 	
-	if isOnFloor():
-		if Input.is_action_pressed("jump"):
-			newVel.y = -200
-		$Camera2D.rotation = lerp_angle($Camera2D.rotation,rotated*(PI/2),0.2)
+	
+	if Input.is_action_just_pressed("jump"):
+		newVel.y = -200
+	$Camera2D.rotation = lerp_angle($Camera2D.rotation,rotated*(PI/2),0.2)
 		
 		
 	velocity = newVel.rotated(rotated*(PI/2))

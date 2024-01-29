@@ -3,7 +3,7 @@ extends Node2D
 @onready var chunkContainer = $ChunkContainer
 var chunkScene = preload("res://world_scenes/chunk/chunk.tscn")
 
-const SIZEINCHUNKS = 32 # (size * 8)^2 = number of tiles
+const SIZEINCHUNKS = 16 # (size * 8)^2 = number of tiles
 
 var planetData = []
 var lightData = []
@@ -15,16 +15,19 @@ var noise = FastNoiseLite.new()
 
 var tick = 0
 
-var allChunks = []
 var chunkArray2D = []
 
 var visibleChunks = []
 
 func _ready():
+	set_physics_process(false)
+	set_process(false)
 	generateEmptyArray()
 	noise.seed = randi()
 	generateTerrain()
-	createChunks()
+	
+	$isVisible.rect = Rect2(SIZEINCHUNKS*-32,SIZEINCHUNKS*-32,SIZEINCHUNKS*64,SIZEINCHUNKS*64)
+
 
 func _physics_process(delta):
 	tick += 1
@@ -109,7 +112,8 @@ func generateTerrain():
 				planetData[x][y][0] = 3
 				planetData[x][y][1] = 3
 				lightData[x][y] = 0.0
-			
+			if getBlockDistance(x,y) <= 4:
+				planetData[x][y][0] = 4
 			
 			
 func createChunks():
@@ -120,8 +124,16 @@ func createChunks():
 			newChunk.pos = Vector2(x,y)
 			newChunk.position = (Vector2(x,y) * 64) - Vector2(SIZEINCHUNKS*32,SIZEINCHUNKS*32)
 			chunkContainer.add_child(newChunk)
-			allChunks.append(newChunk)
 			chunkArray2D[x].append(newChunk)
+	set_physics_process(true)
+	
+	
+func clearChunks():
+	set_physics_process(false)
+	for chunk in chunkContainer.get_children():
+		chunk.queue_free()
+	chunkArray2D = []
+	visibleChunks = []
 
 func getBlockPosition(x,y):
 	var angle1 = Vector2(1,1)
@@ -141,3 +153,11 @@ func getBlockDistance(x,y):
 
 func getBlockRoundedDistance(x,y):
 	return (Vector2(x,y) - centerPoint).length()
+
+
+func _on_is_visible_screen_entered():
+	createChunks()
+
+
+func _on_is_visible_screen_exited():
+	clearChunks()

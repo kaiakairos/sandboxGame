@@ -6,9 +6,14 @@
 [node name="Planet" type="Node2D"]
 script = ExtResource("1_8tc4r")
 
+[node name="isVisible" type="VisibleOnScreenNotifier2D" parent="."]
+
 [node name="ChunkContainer" type="Node2D" parent="."]
 
 [node name="EntityContainer" type="Node2D" parent="."]
 
 [node name="Player" parent="." instance=ExtResource("2_lqcua")]
 position = Vector2(0, -1024)
+
+[connection signal="screen_entered" from="isVisible" to="." method="_on_is_visible_screen_entered"]
+[connection signal="screen_exited" from="isVisible" to="." method="_on_is_visible_screen_exited"]

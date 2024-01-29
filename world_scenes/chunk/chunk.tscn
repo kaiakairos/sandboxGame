@@ -1,7 +1,6 @@
-[gd_scene load_steps=3 format=3 uid="uid://7ejg1f0f55t6"]
+[gd_scene load_steps=2 format=3 uid="uid://7ejg1f0f55t6"]
 
 [ext_resource type="Script" path="res://world_scenes/chunk/chunk.gd" id="1_2ne51"]
-[ext_resource type="Texture2D" uid="uid://ewvjm54mwe8u" path="res://icon.svg" id="2_q03hc"]
 
 [node name="Chunk" type="Node2D"]
 script = ExtResource("1_2ne51")
@@ -20,20 +19,6 @@ collision_mask = 0
 
 [node name="VisibleOnScreenNotifier2D" type="VisibleOnScreenNotifier2D" parent="."]
 rect = Rect2(-64, -64, 192, 192)
-
-[node name="Icon" type="Sprite2D" parent="."]
-visible = false
-self_modulate = Color(1, 1, 1, 0.156863)
-scale = Vector2(0.5, 0.5)
-texture = ExtResource("2_q03hc")
-centered = false
-
-[node name="Label" type="Label" parent="."]
-visible = false
-z_index = 7
-offset_right = 40.0
-offset_bottom = 23.0
-text = "0"
 
 [connection signal="screen_entered" from="VisibleOnScreenNotifier2D" to="." method="_on_visible_on_screen_notifier_2d_screen_entered"]
 [connection signal="screen_exited" from="VisibleOnScreenNotifier2D" to="." method="_on_visible_on_screen_notifier_2d_screen_exited"]
