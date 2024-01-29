@@ -5,6 +5,7 @@
 
 [resource]
 script = ExtResource("1_3i2av")
+spreadChance = 1000
 blocksCanSpreadTo = Array[int]([2])
 blockId = 3
 texture = ExtResource("2_qxu5n")

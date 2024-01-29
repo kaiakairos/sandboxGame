@@ -1,9 +1,14 @@
 extends Block
 class_name BlockGrass
 
+## Chance is 1 in (int)
+@export var spreadChance :int = 100
 @export var blocksCanSpreadTo :Array[int]
 
 func onTick(x,y,data,layer,dir):
+	
+	if randi() % spreadChance != 0:
+		return {}
 	var spwead = {}
 	for xx in range(3):
 		for yy in range(3):
