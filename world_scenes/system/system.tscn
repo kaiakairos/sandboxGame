@@ -9,13 +9,16 @@ script = ExtResource("1_vw61b")
 
 [node name="Objects" type="Node2D" parent="."]
 
-[node name="Player" parent="Objects" instance=ExtResource("2_xgfnh")]
-position = Vector2(-9, -477)
+[node name="Player" parent="Objects" node_paths=PackedStringArray("system") instance=ExtResource("2_xgfnh")]
+position = Vector2(1659, -80)
+system = NodePath("../..")
 
 [node name="CosmicBodies" type="Node2D" parent="."]
 
 [node name="Planet" parent="CosmicBodies" instance=ExtResource("1_blgvb")]
-position = Vector2(64, -64)
 
 [node name="Planet2" parent="CosmicBodies" instance=ExtResource("1_blgvb")]
 position = Vector2(2085, 0)
+
+[node name="Planet3" parent="CosmicBodies" instance=ExtResource("1_blgvb")]
+position = Vector2(2148, -1600)

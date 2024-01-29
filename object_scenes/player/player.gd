@@ -1,8 +1,11 @@
 extends CharacterBody2D
 
-var system = null
+@export var system : Node2D
 
 @onready var sprite = $Sprite
+@onready var camera = $Camera2D
+
+@onready var map = $Camera2D/SystemMap
 
 var rotated = 0
 
@@ -14,13 +17,25 @@ var planet :Node2D = null
 
 func _ready():
 	GlobalRef.player = self
+	
 
 func _process(delta):
 	if is_instance_valid(planet):
 		planetMovement(delta)
 	else:
 		move_and_slide()
-
+		GlobalRef.lightmap.position = global_position - Vector2(256,256)
+		
+		if position.x < -10000:
+			position.x += 20000
+		if position.y < -10000:
+			position.y += 20000
+		if position.x > 10000:
+			position.x -= 20000
+		if position.y > 10000:
+			position.y -= 20000
+		
+		
 func planetMovement(delta):
 	rotated = getPlanetPosition()
 	sprite.rotation = lerp_angle(sprite.rotation,rotated*(PI/2),0.4)
@@ -35,12 +50,13 @@ func planetMovement(delta):
 	newVel.x = lerp(newVel.x,dir*100.0,0.2)
 	newVel.y += gravity * delta
 	
+	newVel.y = min(newVel.y,140)
 	
-	if Input.is_action_just_pressed("jump"):
+	if Input.is_action_pressed("jump"):
 		newVel.y = -200
 	if isOnFloor():
 		$Camera2D.rotation = lerp_angle($Camera2D.rotation,rotated*(PI/2),0.2)
-		
+
 		
 	velocity = newVel.rotated(rotated*(PI/2))
 	

@@ -4,6 +4,9 @@ var system = null
 
 @onready var chunkContainer = $ChunkContainer
 @onready var entityContainer = $EntityContainer
+
+@export var orbiting : Node2D
+
 var chunkScene = preload("res://world_scenes/chunk/chunk.tscn")
 
 const SIZEINCHUNKS = 16 # (size * 8)^2 = number of tiles
@@ -24,13 +27,23 @@ var visibleChunks = []
 
 func _ready():
 	set_physics_process(false)
-	set_process(false)
 	generateEmptyArray()
 	noise.seed = randi()
 	generateTerrain()
 	
 	$isVisible.rect = Rect2(SIZEINCHUNKS*-32,SIZEINCHUNKS*-32,SIZEINCHUNKS*64,SIZEINCHUNKS*64)
+	
+	if orbiting == null:
+		set_process(false)
 
+func _process(delta):
+	##Orbit##
+	var newPos = position.rotated(0.0001)
+	var pos = position
+	position.x = newPos.x
+	position.y = newPos.y
+	
+	GlobalRef.lightmap.position -= pos - position
 
 func _physics_process(delta):
 	tick += 1

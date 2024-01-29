@@ -1,15 +1,16 @@
-[gd_resource type="Resource" script_class="Block" load_steps=3 format=3 uid="uid://ddf65mvmb0h1v"]
+[gd_resource type="Resource" script_class="BlockGrass" load_steps=3 format=3 uid="uid://ddf65mvmb0h1v"]
 
-[ext_resource type="Script" path="res://block_resources/Block.gd" id="1_4tdpa"]
+[ext_resource type="Script" path="res://block_resources/block_classes/BlockGrass.gd" id="1_3i2av"]
 [ext_resource type="Texture2D" uid="uid://cl8rmarmucu73" path="res://block_resources/block_textures/grass.png" id="2_qxu5n"]
 
 [resource]
-script = ExtResource("1_4tdpa")
+script = ExtResource("1_3i2av")
+blocksCanSpreadTo = Array[int]([2])
 blockId = 3
 texture = ExtResource("2_qxu5n")
 rotateTextureToGravity = false
 connectedTexture = true
+texturesConnectToMe = true
 hasCollision = true
-testWiggle = false
 lightMultiplier = 0.9
 lightEmmission = 0.0

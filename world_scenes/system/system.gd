@@ -8,7 +8,9 @@ func _ready():
 		planet.system = self
 	for object in objectContainer.get_children():
 		object.system = self
-
+	
+	GlobalRef.player.map.map(self)
+	
 func reparentToPlanet(object,planet):
 	print(object)
 	print(planet)
