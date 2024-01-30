@@ -1,9 +1,12 @@
-[gd_scene load_steps=6 format=3 uid="uid://c1b1vgh12jqww"]
+[gd_scene load_steps=9 format=3 uid="uid://c1b1vgh12jqww"]
 
 [ext_resource type="Script" path="res://object_scenes/player/player.gd" id="1_7l8c2"]
 [ext_resource type="Texture2D" uid="uid://cc0s6j0tkpjn3" path="res://object_scenes/player/sprite.png" id="1_ly7mi"]
 [ext_resource type="PackedScene" uid="uid://cwctu1ofv35ix" path="res://ui_scenes/map/system_map.tscn" id="3_1j4nq"]
 [ext_resource type="PackedScene" uid="uid://cq6k7eeybndp6" path="res://object_scenes/lightmapCover/lightmap.tscn" id="3_37tb5"]
+[ext_resource type="Texture2D" uid="uid://b4n7qxstm1edx" path="res://ui_scenes/backgroundLayers/stars.png" id="4_a4xgr"]
+[ext_resource type="PackedScene" uid="uid://bbgqoqp0b8tdu" path="res://ui_scenes/backgroundLayers/background_layer.tscn" id="4_rvkhq"]
+[ext_resource type="Texture2D" uid="uid://d1771x22kyqwk" path="res://ui_scenes/backgroundLayers/stars2.png" id="6_io1jr"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_8s1yf"]
 size = Vector2(6, 6)
@@ -35,7 +38,7 @@ hit_from_inside = true
 ignore_rotation = false
 
 [node name="ColorRect" type="ColorRect" parent="Camera2D"]
-z_index = -10
+z_index = -64
 offset_left = -173.0
 offset_top = -158.0
 offset_right = 173.0
@@ -53,6 +56,17 @@ color = Color(0, 0, 0, 1)
 [node name="SystemMap" parent="Camera2D" instance=ExtResource("3_1j4nq")]
 z_index = 3
 position = Vector2(-98, 68)
+
+[node name="Backgroundholder" type="Node2D" parent="Camera2D"]
+position = Vector2(-120, -90)
+
+[node name="BackgroundLayer" parent="Camera2D/Backgroundholder" instance=ExtResource("4_rvkhq")]
+sprite = ExtResource("4_a4xgr")
+
+[node name="BackgroundLayer2" parent="Camera2D/Backgroundholder" instance=ExtResource("4_rvkhq")]
+sprite = ExtResource("6_io1jr")
+multiplierX = 0.5
+multiplierY = 0.5
 
 [node name="Lightmap" parent="." instance=ExtResource("3_37tb5")]
 top_level = true

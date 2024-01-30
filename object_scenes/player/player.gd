@@ -24,7 +24,6 @@ func _process(delta):
 		planetMovement(delta)
 	else:
 		move_and_slide()
-		GlobalRef.lightmap.position = global_position - Vector2(256,256)
 		
 		if position.x < -10000:
 			position.x += 20000
@@ -34,7 +33,7 @@ func _process(delta):
 			position.x -= 20000
 		if position.y > 10000:
 			position.y -= 20000
-		
+		GlobalRef.lightmap.position = global_position - Vector2(256,256)
 		
 func planetMovement(delta):
 	rotated = getPlanetPosition()
