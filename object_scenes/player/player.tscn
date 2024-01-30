@@ -1,4 +1,4 @@
-[gd_scene load_steps=9 format=3 uid="uid://c1b1vgh12jqww"]
+[gd_scene load_steps=10 format=3 uid="uid://c1b1vgh12jqww"]
 
 [ext_resource type="Script" path="res://object_scenes/player/player.gd" id="1_7l8c2"]
 [ext_resource type="Texture2D" uid="uid://cc0s6j0tkpjn3" path="res://object_scenes/player/sprite.png" id="1_ly7mi"]
@@ -7,6 +7,7 @@
 [ext_resource type="Texture2D" uid="uid://b4n7qxstm1edx" path="res://ui_scenes/backgroundLayers/stars.png" id="4_a4xgr"]
 [ext_resource type="PackedScene" uid="uid://bbgqoqp0b8tdu" path="res://ui_scenes/backgroundLayers/background_layer.tscn" id="4_rvkhq"]
 [ext_resource type="Texture2D" uid="uid://d1771x22kyqwk" path="res://ui_scenes/backgroundLayers/stars2.png" id="6_io1jr"]
+[ext_resource type="Texture2D" uid="uid://li65l7fwxo8u" path="res://ui_scenes/backgroundLayers/spaceFog.png" id="7_6vkfj"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_8s1yf"]
 size = Vector2(6, 6)
@@ -62,11 +63,18 @@ position = Vector2(-120, -90)
 
 [node name="BackgroundLayer" parent="Camera2D/Backgroundholder" instance=ExtResource("4_rvkhq")]
 sprite = ExtResource("4_a4xgr")
+multiplierX = 0.02
+multiplierY = 0.02
 
 [node name="BackgroundLayer2" parent="Camera2D/Backgroundholder" instance=ExtResource("4_rvkhq")]
 sprite = ExtResource("6_io1jr")
-multiplierX = 0.5
-multiplierY = 0.5
+multiplierX = 0.04
+multiplierY = 0.04
+
+[node name="BackgroundLayer3" parent="Camera2D/Backgroundholder" instance=ExtResource("4_rvkhq")]
+sprite = ExtResource("7_6vkfj")
+multiplierX = 0.1
+multiplierY = 0.1
 
 [node name="Lightmap" parent="." instance=ExtResource("3_37tb5")]
 top_level = true

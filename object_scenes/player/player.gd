@@ -34,7 +34,9 @@ func _process(delta):
 		if position.y > 10000:
 			position.y -= 20000
 		GlobalRef.lightmap.position = global_position - Vector2(256,256)
-		
+	
+	scrollBackgrounds(delta)
+	
 func planetMovement(delta):
 	rotated = getPlanetPosition()
 	sprite.rotation = lerp_angle(sprite.rotation,rotated*(PI/2),0.4)
@@ -118,3 +120,7 @@ func updateLightStatic():
 	var newPos = (currentChunk * 64) - Vector2(1024,1024) - Vector2(256,256)
 	GlobalRef.lightmap.pushUpdate(planet,newPos)
 	previousChunk = currentChunk
+
+func scrollBackgrounds(delta):
+	for layer in $Camera2D/Backgroundholder.get_children():
+		layer.updatePosition(velocity.rotated(-camera.rotation)*-delta)
