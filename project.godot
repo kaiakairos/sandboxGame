@@ -29,10 +29,10 @@ gdscript/warnings/integer_division=0
 
 [display]
 
-window/size/viewport_width=240
-window/size/viewport_height=180
-window/size/window_width_override=720
-window/size/window_height_override=540
+window/size/viewport_width=260
+window/size/viewport_height=230
+window/size/window_width_override=780
+window/size/window_height_override=690
 window/stretch/mode="viewport"
 window/vsync/vsync_mode=0
 

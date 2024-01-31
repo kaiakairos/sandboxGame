@@ -3,9 +3,9 @@ extends CharacterBody2D
 @export var system : Node2D
 
 @onready var sprite = $Sprite
-@onready var camera = $Camera2D
+@onready var camera = $CameraOrigin/Camera2D
 
-@onready var map = $Camera2D/SystemMap
+@onready var map = $CameraOrigin/Camera2D/SystemMap
 
 var rotated = 0
 
@@ -56,12 +56,14 @@ func planetMovement(delta):
 	if Input.is_action_pressed("jump"):
 		newVel.y = -200
 	if isOnFloor():
-		$Camera2D.rotation = lerp_angle($Camera2D.rotation,rotated*(PI/2),0.2)
-
-		
+		camera.rotation = lerp_angle(camera.rotation,rotated*(PI/2),0.2)
+	
 	velocity = newVel.rotated(rotated*(PI/2))
 	
 	move_and_slide()
+
+	$CameraOrigin.position = Vector2(0,-20).rotated(camera.rotation)
+		
 	
 	
 	dig()
@@ -122,5 +124,5 @@ func updateLightStatic():
 	previousChunk = currentChunk
 
 func scrollBackgrounds(delta):
-	for layer in $Camera2D/Backgroundholder.get_children():
+	for layer in $CameraOrigin/Camera2D/Backgroundholder.get_children():
 		layer.updatePosition(velocity.rotated(-camera.rotation)*-delta)

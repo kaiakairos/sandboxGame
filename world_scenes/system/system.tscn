@@ -10,7 +10,7 @@ script = ExtResource("1_vw61b")
 [node name="Objects" type="Node2D" parent="."]
 
 [node name="Player" parent="Objects" node_paths=PackedStringArray("system") instance=ExtResource("2_xgfnh")]
-position = Vector2(1659, -80)
+position = Vector2(2090, -380)
 system = NodePath("../..")
 
 [node name="CosmicBodies" type="Node2D" parent="."]
