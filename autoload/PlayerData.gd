@@ -1,11 +1,55 @@
 extends Node
 
+## [ITEMID,COUNT]
+var inventory = {} #0-39 inventory, 40-42 armor, 43-48 acces, 49 held
+signal updateInventory
 
-# Called when the node enters the scene tree for the first time.
-func _ready():
-	pass # Replace with function body.
+func initializeInventory():
+	for i in range(50):
+		inventory[i] = [-1,-1]
 
+func addItem(itemID,amount):
+	
+	var itemCountLeft = amount
+	
+	var itemData = ItemData.data[itemID]
+	var itemMax = itemData.maxStackSize
+	for slot in inventoryHasItem(itemID):
+		var add = inventory[slot][1] + itemCountLeft
+		if add > itemMax:
+			itemCountLeft -= (itemMax - inventory[slot][1])
+			inventory[slot][1] = itemMax
+		else:
+			inventory[slot][1] += itemCountLeft
+			itemCountLeft = 0
+			emit_signal("updateInventory")
+			return true
+	
+	var emptySlot = findEmptySlot()
+	if emptySlot == null:
+		return false
+	
+	inventory[emptySlot] = [itemID,itemCountLeft]
+	emit_signal("updateInventory")
+	return true
+	
 
-# Called every frame. 'delta' is the elapsed time since the previous frame.
-func _process(delta):
-	pass
+func findEmptySlot():
+	for i in range(40):
+		if inventory[i][0] == -1:
+			return i
+	return null
+
+func inventoryHasItem(itemID):
+	var slots = []
+	for i in range(50):
+		if inventory[i][0] == itemID:
+			slots.append(i)
+	return slots
+
+func swapItem(slot1,slot2):
+	var carry = inventory[slot1].duplicate()
+	inventory[slot1] = inventory[slot2]
+	inventory[slot2] = carry
+	emit_signal("updateInventory")
+	

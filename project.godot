@@ -19,7 +19,9 @@ config/icon="res://icon.svg"
 [autoload]
 
 BlockData="*res://autoload/BlockData.gd"
+ItemData="*res://autoload/ItemData.gd"
 GlobalRef="*res://autoload/GlobalRef.gd"
+PlayerData="*res://autoload/PlayerData.gd"
 
 [debug]
 
@@ -52,6 +54,10 @@ folder_colors={
 "res://ui_scenes/": "purple",
 "res://world_scenes/": "pink"
 }
+
+[gui]
+
+theme/default_font_antialiasing=0
 
 [input]
 

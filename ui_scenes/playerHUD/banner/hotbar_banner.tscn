@@ -1,61 +1,10 @@
-[gd_scene load_steps=3 format=3 uid="uid://daqevwntvcp3o"]
+[gd_scene load_steps=2 format=3 uid="uid://daqevwntvcp3o"]
 
 [ext_resource type="Texture2D" uid="uid://b8v2qb6g7djl2" path="res://ui_scenes/playerHUD/banner/bannerBack.png" id="1_b0oq5"]
-[ext_resource type="Texture2D" uid="uid://ckr1m6uhyqyyb" path="res://ui_scenes/playerHUD/inventory/slot.png" id="2_bwxs6"]
 
 [node name="HotbarBanner" type="Node2D"]
 
 [node name="BannerBack" type="Sprite2D" parent="."]
 position = Vector2(-1, -1)
 texture = ExtResource("1_b0oq5")
-centered = false
-
-[node name="Slot" type="Sprite2D" parent="."]
-position = Vector2(5, 5)
-texture = ExtResource("2_bwxs6")
-centered = false
-
-[node name="Slot2" type="Sprite2D" parent="."]
-position = Vector2(70, 5)
-texture = ExtResource("2_bwxs6")
-centered = false
-
-[node name="Slot3" type="Sprite2D" parent="."]
-position = Vector2(18, 5)
-texture = ExtResource("2_bwxs6")
-centered = false
-
-[node name="Slot4" type="Sprite2D" parent="."]
-position = Vector2(31, 5)
-texture = ExtResource("2_bwxs6")
-centered = false
-
-[node name="Slot5" type="Sprite2D" parent="."]
-position = Vector2(44, 5)
-texture = ExtResource("2_bwxs6")
-centered = false
-
-[node name="Slot6" type="Sprite2D" parent="."]
-position = Vector2(57, 5)
-texture = ExtResource("2_bwxs6")
-centered = false
-
-[node name="Slot7" type="Sprite2D" parent="."]
-position = Vector2(83, 5)
-texture = ExtResource("2_bwxs6")
-centered = false
-
-[node name="Slot8" type="Sprite2D" parent="."]
-position = Vector2(96, 5)
-texture = ExtResource("2_bwxs6")
-centered = false
-
-[node name="Slot9" type="Sprite2D" parent="."]
-position = Vector2(109, 5)
-texture = ExtResource("2_bwxs6")
-centered = false
-
-[node name="Slot10" type="Sprite2D" parent="."]
-position = Vector2(122, 5)
-texture = ExtResource("2_bwxs6")
 centered = false
