@@ -28,7 +28,23 @@ func _process(delta):
 	if is_instance_valid(planet):
 		planetMovement(delta)
 	else:
+		
+		if system != null:
+			for planet in system.cosmicBodyContainer.get_children():
+				var gravityConstant := 1000.0
+				var mass := 1000.0
+				var playerMass := 1.0
+				
+				var distance = planet.global_position - global_position
+				var forceAmount = (gravityConstant*mass*playerMass)/(distance.length()*distance.length())
+				
+				velocity += distance.normalized() * forceAmount
+		
+		
+		
 		move_and_slide()
+
+		sprite.rotate(0.01)
 		
 		if position.x < -10000:
 			position.x += 20000
@@ -69,14 +85,12 @@ func planetMovement(delta):
 	newVel.y = min(newVel.y,140)
 	
 	if Input.is_action_pressed("jump"):
-		newVel.y = -200
+		newVel.y = -500
 	if isOnFloor():
 		camera.rotation = lerp_angle(camera.rotation,rotated*(PI/2),0.2)
 	
 	velocity = newVel.rotated(rotated*(PI/2))
-	
-	print(velocity)
-	
+
 	move_and_slide()
 	playerAnimation(dir,newVel,delta)
 	
