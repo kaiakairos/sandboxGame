@@ -19,6 +19,24 @@
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_8s1yf"]
 size = Vector2(6, 6)
 
+[sub_resource type="Animation" id="Animation_vctuh"]
+resource_name = "fall"
+length = 0.1
+tracks/0/type = "method"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath(".")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"values": [{
+"args": [5],
+"method": &"setAllPlayerFrames"
+}]
+}
+
 [sub_resource type="Animation" id="Animation_w13ke"]
 resource_name = "idle"
 length = 0.1
@@ -33,6 +51,24 @@ tracks/0/keys = {
 "transitions": PackedFloat32Array(1),
 "values": [{
 "args": [0],
+"method": &"setAllPlayerFrames"
+}]
+}
+
+[sub_resource type="Animation" id="Animation_hqg3u"]
+resource_name = "jump"
+length = 0.1
+tracks/0/type = "method"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath(".")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"values": [{
+"args": [6],
 "method": &"setAllPlayerFrames"
 }]
 }
@@ -61,42 +97,6 @@ tracks/0/keys = {
 "method": &"setAllPlayerFrames"
 }, {
 "args": [4],
-"method": &"setAllPlayerFrames"
-}]
-}
-
-[sub_resource type="Animation" id="Animation_hqg3u"]
-resource_name = "jump"
-length = 0.1
-tracks/0/type = "method"
-tracks/0/imported = false
-tracks/0/enabled = true
-tracks/0/path = NodePath(".")
-tracks/0/interp = 1
-tracks/0/loop_wrap = true
-tracks/0/keys = {
-"times": PackedFloat32Array(0),
-"transitions": PackedFloat32Array(1),
-"values": [{
-"args": [6],
-"method": &"setAllPlayerFrames"
-}]
-}
-
-[sub_resource type="Animation" id="Animation_vctuh"]
-resource_name = "fall"
-length = 0.1
-tracks/0/type = "method"
-tracks/0/imported = false
-tracks/0/enabled = true
-tracks/0/path = NodePath(".")
-tracks/0/interp = 1
-tracks/0/loop_wrap = true
-tracks/0/keys = {
-"times": PackedFloat32Array(0),
-"transitions": PackedFloat32Array(1),
-"values": [{
-"args": [5],
 "method": &"setAllPlayerFrames"
 }]
 }
