@@ -5,7 +5,8 @@
 [ext_resource type="Texture2D" uid="uid://mwjxc6goor4m" path="res://block_resources/block_textures/dirt.png" id="3_i7kpg"]
 [ext_resource type="FontFile" uid="uid://c3vw44vws5n61" path="res://zeeg/font/I-pixel-u.ttf" id="4_7ea8k"]
 
-[sub_resource type="LabelSettings" id="LabelSettings_hcinw"]
+[sub_resource type="LabelSettings" id="LabelSettings_k4b4x"]
+resource_local_to_scene = true
 font = ExtResource("4_7ea8k")
 font_size = 8
 font_color = Color(0.854902, 0.878431, 0.901961, 1)
@@ -15,7 +16,15 @@ outline_color = Color(0.0823529, 0.113725, 0.156863, 1)
 [node name="InventorySlot" type="Node2D"]
 script = ExtResource("1_xnqf7")
 
+[node name="button" type="ColorRect" parent="."]
+offset_left = -2.0
+offset_top = -2.0
+offset_right = 14.0
+offset_bottom = 14.0
+color = Color(1, 1, 1, 0)
+
 [node name="Slot" type="Sprite2D" parent="."]
+modulate = Color(0.0823529, 0.113725, 0.156863, 1)
 texture = ExtResource("2_07g1i")
 centered = false
 
@@ -23,18 +32,13 @@ centered = false
 position = Vector2(6, 6)
 texture = ExtResource("3_i7kpg")
 
-[node name="Button" type="Button" parent="."]
-offset_right = 12.0
-offset_bottom = 12.0
-flat = true
-
 [node name="Label" type="Label" parent="."]
 offset_left = -9.0
 offset_top = 6.0
 offset_right = 15.0
 offset_bottom = 17.0
 text = "99"
-label_settings = SubResource("LabelSettings_hcinw")
+label_settings = SubResource("LabelSettings_k4b4x")
 horizontal_alignment = 2
 
-[connection signal="pressed" from="Button" to="." method="_on_button_pressed"]
+[connection signal="gui_input" from="button" to="." method="_on_color_rect_gui_input"]

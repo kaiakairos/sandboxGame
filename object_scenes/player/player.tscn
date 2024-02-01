@@ -1,17 +1,113 @@
-[gd_scene load_steps=11 format=3 uid="uid://c1b1vgh12jqww"]
+[gd_scene load_steps=22 format=3 uid="uid://c1b1vgh12jqww"]
 
 [ext_resource type="Script" path="res://object_scenes/player/player.gd" id="1_7l8c2"]
-[ext_resource type="Texture2D" uid="uid://cc0s6j0tkpjn3" path="res://object_scenes/player/sprite.png" id="1_ly7mi"]
+[ext_resource type="Texture2D" uid="uid://bdal1quvajxp" path="res://object_scenes/player/sprites/layerHandBack.png" id="2_a2jo3"]
 [ext_resource type="PackedScene" uid="uid://cwctu1ofv35ix" path="res://ui_scenes/map/system_map.tscn" id="3_1j4nq"]
 [ext_resource type="PackedScene" uid="uid://cq6k7eeybndp6" path="res://object_scenes/lightmapCover/lightmap.tscn" id="3_37tb5"]
 [ext_resource type="PackedScene" uid="uid://daqevwntvcp3o" path="res://ui_scenes/playerHUD/banner/hotbar_banner.tscn" id="3_et7b7"]
+[ext_resource type="Texture2D" uid="uid://b6gsjyt0j3jus" path="res://object_scenes/player/sprites/layerShirt.png" id="3_vs5p5"]
+[ext_resource type="Texture2D" uid="uid://l1hy80jqh3c8" path="res://object_scenes/player/sprites/layerPants.png" id="4_2l72k"]
 [ext_resource type="Texture2D" uid="uid://b4n7qxstm1edx" path="res://ui_scenes/backgroundLayers/stars.png" id="4_a4xgr"]
 [ext_resource type="PackedScene" uid="uid://bbgqoqp0b8tdu" path="res://ui_scenes/backgroundLayers/background_layer.tscn" id="4_rvkhq"]
+[ext_resource type="Texture2D" uid="uid://4venxjq1gy4m" path="res://object_scenes/player/sprites/layerHead.png" id="5_hktle"]
 [ext_resource type="Texture2D" uid="uid://d1771x22kyqwk" path="res://ui_scenes/backgroundLayers/stars2.png" id="6_io1jr"]
+[ext_resource type="Texture2D" uid="uid://c47fuirjhvx43" path="res://object_scenes/player/sprites/layerEye.png" id="6_uk1hk"]
 [ext_resource type="Texture2D" uid="uid://li65l7fwxo8u" path="res://ui_scenes/backgroundLayers/spaceFog.png" id="7_6vkfj"]
+[ext_resource type="Texture2D" uid="uid://bjd5c0gdm1qt2" path="res://object_scenes/player/sprites/layerEyeBlink.png" id="7_sxd0h"]
+[ext_resource type="Texture2D" uid="uid://dei6me4j1chus" path="res://object_scenes/player/sprites/layerHandFront.png" id="8_0olu2"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_8s1yf"]
 size = Vector2(6, 6)
+
+[sub_resource type="Animation" id="Animation_w13ke"]
+resource_name = "idle"
+length = 0.1
+tracks/0/type = "method"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath(".")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"values": [{
+"args": [0],
+"method": &"setAllPlayerFrames"
+}]
+}
+
+[sub_resource type="Animation" id="Animation_0sji6"]
+resource_name = "walk"
+length = 0.4
+step = 0.01
+tracks/0/type = "method"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath(".")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.1, 0.2, 0.3),
+"transitions": PackedFloat32Array(1, 1, 1, 1),
+"values": [{
+"args": [1],
+"method": &"setAllPlayerFrames"
+}, {
+"args": [2],
+"method": &"setAllPlayerFrames"
+}, {
+"args": [3],
+"method": &"setAllPlayerFrames"
+}, {
+"args": [4],
+"method": &"setAllPlayerFrames"
+}]
+}
+
+[sub_resource type="Animation" id="Animation_hqg3u"]
+resource_name = "jump"
+length = 0.1
+tracks/0/type = "method"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath(".")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"values": [{
+"args": [6],
+"method": &"setAllPlayerFrames"
+}]
+}
+
+[sub_resource type="Animation" id="Animation_vctuh"]
+resource_name = "fall"
+length = 0.1
+tracks/0/type = "method"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath(".")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"values": [{
+"args": [5],
+"method": &"setAllPlayerFrames"
+}]
+}
+
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_4n17m"]
+_data = {
+"fall": SubResource("Animation_vctuh"),
+"idle": SubResource("Animation_w13ke"),
+"jump": SubResource("Animation_hqg3u"),
+"walk": SubResource("Animation_0sji6")
+}
 
 [node name="Player" type="CharacterBody2D"]
 collision_layer = 2
@@ -20,21 +116,73 @@ script = ExtResource("1_7l8c2")
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
 shape = SubResource("RectangleShape2D_8s1yf")
 
-[node name="Sprite" type="Sprite2D" parent="."]
-texture = ExtResource("1_ly7mi")
-offset = Vector2(0, -1)
+[node name="PlayerLayers" type="CanvasGroup" parent="."]
+
+[node name="handBack" type="Sprite2D" parent="PlayerLayers"]
+position = Vector2(0, 3)
+texture = ExtResource("2_a2jo3")
+offset = Vector2(0, -8)
+hframes = 7
+
+[node name="shirt" type="Sprite2D" parent="PlayerLayers"]
+position = Vector2(0, 3)
+texture = ExtResource("3_vs5p5")
+offset = Vector2(0, -8)
+hframes = 7
+
+[node name="pants" type="Sprite2D" parent="PlayerLayers"]
+position = Vector2(0, 3)
+texture = ExtResource("4_2l72k")
+offset = Vector2(0, -8)
+hframes = 7
+
+[node name="head" type="Sprite2D" parent="PlayerLayers"]
+modulate = Color(0.552941, 0.521569, 1, 1)
+position = Vector2(0, 3)
+texture = ExtResource("5_hktle")
+offset = Vector2(0, -8)
+hframes = 7
+
+[node name="eye" type="Sprite2D" parent="PlayerLayers"]
+position = Vector2(0, 3)
+texture = ExtResource("6_uk1hk")
+offset = Vector2(0, -8)
+hframes = 7
+
+[node name="eyeBlink" type="Sprite2D" parent="PlayerLayers"]
+visible = false
+position = Vector2(0, 3)
+texture = ExtResource("7_sxd0h")
+offset = Vector2(0, -8)
+hframes = 7
+
+[node name="handFront" type="Sprite2D" parent="PlayerLayers"]
+position = Vector2(0, 3)
+texture = ExtResource("8_0olu2")
+offset = Vector2(0, -8)
+hframes = 7
 
 [node name="FloorAngles" type="Node2D" parent="."]
 
 [node name="FloorCast1" type="RayCast2D" parent="FloorAngles"]
 position = Vector2(-3, 3)
-target_position = Vector2(0, 6)
+target_position = Vector2(0, 2)
 hit_from_inside = true
 
 [node name="FloorCast2" type="RayCast2D" parent="FloorAngles"]
 position = Vector2(3, 3)
-target_position = Vector2(0, 6)
+target_position = Vector2(0, 2)
 hit_from_inside = true
+
+[node name="CeilingAngles" type="Node2D" parent="."]
+
+[node name="cCast1" type="RayCast2D" parent="CeilingAngles"]
+position = Vector2(-3, -3)
+target_position = Vector2(0, -3)
+
+[node name="cCast2" type="RayCast2D" parent="CeilingAngles"]
+position = Vector2(3, -3)
+target_position = Vector2(0, -3)
 
 [node name="CameraOrigin" type="Node2D" parent="."]
 position = Vector2(0, -40)
@@ -85,3 +233,8 @@ position = Vector2(-130, -115)
 
 [node name="Lightmap" parent="." instance=ExtResource("3_37tb5")]
 top_level = true
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="."]
+libraries = {
+"": SubResource("AnimationLibrary_4n17m")
+}

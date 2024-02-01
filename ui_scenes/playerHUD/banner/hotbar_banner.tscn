@@ -55,7 +55,15 @@ slotToDisplay = 8
 position = Vector2(72, 17)
 slotToDisplay = 9
 
+[node name="holdingSlot" parent="." instance=ExtResource("2_il2kt")]
+z_index = 3
+position = Vector2(-24, 195)
+slotToDisplay = 49
+showOutline = false
+isHoldSlot = true
+
 [node name="Menu" type="Node2D" parent="."]
+visible = false
 position = Vector2(-1, -1)
 
 [node name="background" type="ColorRect" parent="Menu"]
@@ -63,12 +71,6 @@ offset_top = 41.0
 offset_right = 262.0
 offset_bottom = 233.0
 color = Color(0, 0, 0, 0.898039)
-
-[node name="holdingSlot" parent="Menu" instance=ExtResource("2_il2kt")]
-position = Vector2(-23, 196)
-slotToDisplay = 49
-showOutline = false
-isHoldSlot = true
 
 [node name="InventoryBody" type="Node2D" parent="Menu"]
 position = Vector2(6, 44)

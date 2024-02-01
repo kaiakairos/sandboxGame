@@ -2,7 +2,8 @@ extends CharacterBody2D
 
 @export var system : Node2D
 
-@onready var sprite = $Sprite
+@onready var sprite = $PlayerLayers
+@onready var animationPlayer = $AnimationPlayer
 @onready var camera = $CameraOrigin/Camera2D
 
 @onready var map = $CameraOrigin/Camera2D/SystemMap
@@ -15,7 +16,7 @@ var previousChunk = Vector2.ZERO
 
 var planet :Node2D = null
 
-var tick = 0
+var animTick = 0
 
 var maxCameraDistance := 0
 
@@ -46,6 +47,15 @@ func planetMovement(delta):
 	rotated = getPlanetPosition()
 	sprite.rotation = lerp_angle(sprite.rotation,rotated*(PI/2),0.4)
 	
+	var underCeiling = isUnderCeiling()
+	var speed = 100.0
+	
+	if underCeiling:
+		speed = 25.0
+		squishSprites(0.68,delta)
+	else:
+		squishSprites(1.0,delta)
+	
 	var dir = 0
 	if Input.is_action_pressed("move_left"):
 		dir -= 1
@@ -53,7 +63,7 @@ func planetMovement(delta):
 		dir += 1
 	
 	var newVel = velocity.rotated(-rotated*(PI/2))
-	newVel.x = lerp(newVel.x,dir*100.0,0.2)
+	newVel.x = lerp(newVel.x,dir*speed,0.2)
 	newVel.y += gravity * delta
 	
 	newVel.y = min(newVel.y,140)
@@ -65,7 +75,10 @@ func planetMovement(delta):
 	
 	velocity = newVel.rotated(rotated*(PI/2))
 	
+	print(velocity)
+	
 	move_and_slide()
+	playerAnimation(dir,newVel,delta)
 	
 	cameraMovement()
 	dig()
@@ -80,8 +93,34 @@ func cameraMovement():
 	$CameraOrigin.position = Vector2(0,-20).rotated(camera.rotation) + (g*0.5)
 	$CameraOrigin.position.x = int($CameraOrigin.position.x)
 	$CameraOrigin.position.y = int($CameraOrigin.position.y)
-	
 
+func playerAnimation(dir,newVel,delta):
+	
+	if dir != 0:
+		sprite.scale.x = dir
+	
+	if !isOnFloor():
+		if newVel.y <= 0:
+			animationPlayer.play("jump")
+			return
+		else:
+			animationPlayer.play("fall")
+			return
+	if dir == 0:
+		animationPlayer.play("idle")
+	elif animationPlayer.current_animation != "walk":
+			animationPlayer.play("walk")
+
+func setAllPlayerFrames(frame:int):
+	for obj in sprite.get_children():
+		obj.frame = frame
+
+func squishSprites(target,delta):
+	for obj in sprite.get_children():
+		obj.scale.y = lerp(obj.scale.y,target,20*delta)
+		if obj == $PlayerLayers/eye:
+			obj.scale.y = 1.0
+			obj.position.y = lerp(obj.position.y,3.0+(3.0*int(target!=1.0)),20*delta)
 
 func dig():
 	
@@ -109,12 +148,20 @@ func getPlanetPosition():
 	return [0,1,3,2][dot1 + dot2]
 
 func isOnFloor():
-	
 	$FloorAngles.rotation = rotated*(PI/2)
 	
 	if $FloorAngles/FloorCast1.is_colliding():
 		return true
 	if $FloorAngles/FloorCast2.is_colliding():
+		return true
+	return false
+
+func isUnderCeiling():
+	$CeilingAngles.rotation = rotated*(PI/2)
+	
+	if $CeilingAngles/cCast1.is_colliding():
+		return true
+	if $CeilingAngles/cCast2.is_colliding():
 		return true
 	return false
 

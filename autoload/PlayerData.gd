@@ -4,6 +4,8 @@ extends Node
 var inventory = {} #0-39 inventory, 40-42 armor, 43-48 acces, 49 held
 signal updateInventory
 
+var selectedSlot = 0
+
 func _ready():
 	initializeInventory()
 
