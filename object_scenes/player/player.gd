@@ -15,9 +15,13 @@ var previousChunk = Vector2.ZERO
 
 var planet :Node2D = null
 
+var tick = 0
+
+var maxCameraDistance := 0
+
 func _ready():
 	GlobalRef.player = self
-	
+	PlayerData.addItem(0,1995)
 
 func _process(delta):
 	if is_instance_valid(planet):
@@ -37,6 +41,7 @@ func _process(delta):
 	
 	scrollBackgrounds(delta)
 	
+
 func planetMovement(delta):
 	rotated = getPlanetPosition()
 	sprite.rotation = lerp_angle(sprite.rotation,rotated*(PI/2),0.4)
@@ -61,14 +66,21 @@ func planetMovement(delta):
 	velocity = newVel.rotated(rotated*(PI/2))
 	
 	move_and_slide()
-
-	$CameraOrigin.position = Vector2(0,-20).rotated(camera.rotation)
-		
 	
-	
+	cameraMovement()
 	dig()
 	updateLight()
 
+func cameraMovement():
+	var g = to_local(get_global_mouse_position())
+	
+	if g.length() > maxCameraDistance:
+		g = g.normalized() * maxCameraDistance
+	
+	$CameraOrigin.position = Vector2(0,-20).rotated(camera.rotation) + (g*0.5)
+	$CameraOrigin.position.x = int($CameraOrigin.position.x)
+	$CameraOrigin.position.y = int($CameraOrigin.position.y)
+	
 
 
 func dig():

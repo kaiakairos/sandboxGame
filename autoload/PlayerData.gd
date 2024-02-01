@@ -4,6 +4,9 @@ extends Node
 var inventory = {} #0-39 inventory, 40-42 armor, 43-48 acces, 49 held
 signal updateInventory
 
+func _ready():
+	initializeInventory()
+
 func initializeInventory():
 	for i in range(50):
 		inventory[i] = [-1,-1]
@@ -23,15 +26,24 @@ func addItem(itemID,amount):
 			inventory[slot][1] += itemCountLeft
 			itemCountLeft = 0
 			emit_signal("updateInventory")
-			return true
+			return 0
 	
 	var emptySlot = findEmptySlot()
 	if emptySlot == null:
-		return false
+		return itemCountLeft
+	
+	if itemCountLeft > itemMax:
+		while itemCountLeft > itemMax:
+			inventory[emptySlot] = [itemID,itemMax]
+			itemCountLeft -= itemMax
+			emptySlot = findEmptySlot()
+			if emptySlot == null:
+				return itemCountLeft
 	
 	inventory[emptySlot] = [itemID,itemCountLeft]
+	
 	emit_signal("updateInventory")
-	return true
+	return 0
 	
 
 func findEmptySlot():

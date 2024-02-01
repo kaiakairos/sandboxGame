@@ -52,11 +52,13 @@ folder_colors={
 "res://item_resources/": "green",
 "res://object_scenes/": "blue",
 "res://ui_scenes/": "purple",
-"res://world_scenes/": "pink"
+"res://world_scenes/": "pink",
+"res://zeeg/": "gray"
 }
 
 [gui]
 
+fonts/dynamic_fonts/use_oversampling=false
 theme/default_font_antialiasing=0
 
 [input]

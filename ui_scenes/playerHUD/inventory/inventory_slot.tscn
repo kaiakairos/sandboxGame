@@ -1,11 +1,16 @@
-[gd_scene load_steps=5 format=3 uid="uid://cr7y1t1hoywt1"]
+[gd_scene load_steps=6 format=3 uid="uid://cr7y1t1hoywt1"]
 
 [ext_resource type="Script" path="res://ui_scenes/playerHUD/inventory/inventory_slot.gd" id="1_xnqf7"]
 [ext_resource type="Texture2D" uid="uid://ckr1m6uhyqyyb" path="res://ui_scenes/playerHUD/inventory/slot.png" id="2_07g1i"]
 [ext_resource type="Texture2D" uid="uid://mwjxc6goor4m" path="res://block_resources/block_textures/dirt.png" id="3_i7kpg"]
+[ext_resource type="FontFile" uid="uid://c3vw44vws5n61" path="res://zeeg/font/I-pixel-u.ttf" id="4_7ea8k"]
 
 [sub_resource type="LabelSettings" id="LabelSettings_hcinw"]
-font_size = 7
+font = ExtResource("4_7ea8k")
+font_size = 8
+font_color = Color(0.854902, 0.878431, 0.901961, 1)
+outline_size = 5
+outline_color = Color(0.0823529, 0.113725, 0.156863, 1)
 
 [node name="InventorySlot" type="Node2D"]
 script = ExtResource("1_xnqf7")
@@ -18,11 +23,18 @@ centered = false
 position = Vector2(6, 6)
 texture = ExtResource("3_i7kpg")
 
+[node name="Button" type="Button" parent="."]
+offset_right = 12.0
+offset_bottom = 12.0
+flat = true
+
 [node name="Label" type="Label" parent="."]
-offset_left = 4.0
+offset_left = -9.0
 offset_top = 6.0
-offset_right = 14.0
+offset_right = 15.0
 offset_bottom = 17.0
-text = "15"
+text = "99"
 label_settings = SubResource("LabelSettings_hcinw")
 horizontal_alignment = 2
+
+[connection signal="pressed" from="Button" to="." method="_on_button_pressed"]

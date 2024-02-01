@@ -8,4 +8,4 @@ script = ExtResource("1_fd7bo")
 blockID = 2
 id = 0
 texture = ExtResource("2_7dfe1")
-maxStackSize = 999
+maxStackSize = 99

@@ -1,10 +1,233 @@
-[gd_scene load_steps=2 format=3 uid="uid://daqevwntvcp3o"]
+[gd_scene load_steps=3 format=3 uid="uid://daqevwntvcp3o"]
 
-[ext_resource type="Texture2D" uid="uid://b8v2qb6g7djl2" path="res://ui_scenes/playerHUD/banner/bannerBack.png" id="1_b0oq5"]
+[ext_resource type="Script" path="res://ui_scenes/playerHUD/banner/hotbar_banner.gd" id="1_iyyfi"]
+[ext_resource type="PackedScene" uid="uid://cr7y1t1hoywt1" path="res://ui_scenes/playerHUD/inventory/inventory_slot.tscn" id="2_il2kt"]
 
 [node name="HotbarBanner" type="Node2D"]
+z_index = 170
+script = ExtResource("1_iyyfi")
 
-[node name="BannerBack" type="Sprite2D" parent="."]
+[node name="blackBanner" type="ColorRect" parent="."]
+offset_left = -1.0
+offset_top = -1.0
+offset_right = 261.0
+offset_bottom = 40.0
+color = Color(0, 0, 0, 1)
+
+[node name="Hotbar" type="Node2D" parent="."]
+position = Vector2(5, 5)
+
+[node name="slot0" parent="Hotbar" instance=ExtResource("2_il2kt")]
+
+[node name="slot1" parent="Hotbar" instance=ExtResource("2_il2kt")]
+position = Vector2(18, 0)
+slotToDisplay = 1
+
+[node name="slot2" parent="Hotbar" instance=ExtResource("2_il2kt")]
+position = Vector2(36, 0)
+slotToDisplay = 2
+
+[node name="slot3" parent="Hotbar" instance=ExtResource("2_il2kt")]
+position = Vector2(54, 0)
+slotToDisplay = 3
+
+[node name="slot4" parent="Hotbar" instance=ExtResource("2_il2kt")]
+position = Vector2(72, 0)
+slotToDisplay = 4
+
+[node name="slot5" parent="Hotbar" instance=ExtResource("2_il2kt")]
+position = Vector2(0, 17)
+slotToDisplay = 5
+
+[node name="slot6" parent="Hotbar" instance=ExtResource("2_il2kt")]
+position = Vector2(18, 17)
+slotToDisplay = 6
+
+[node name="slot7" parent="Hotbar" instance=ExtResource("2_il2kt")]
+position = Vector2(36, 17)
+slotToDisplay = 7
+
+[node name="slot8" parent="Hotbar" instance=ExtResource("2_il2kt")]
+position = Vector2(54, 17)
+slotToDisplay = 8
+
+[node name="slot9" parent="Hotbar" instance=ExtResource("2_il2kt")]
+position = Vector2(72, 17)
+slotToDisplay = 9
+
+[node name="Menu" type="Node2D" parent="."]
 position = Vector2(-1, -1)
-texture = ExtResource("1_b0oq5")
-centered = false
+
+[node name="background" type="ColorRect" parent="Menu"]
+offset_top = 41.0
+offset_right = 262.0
+offset_bottom = 233.0
+color = Color(0, 0, 0, 0.898039)
+
+[node name="holdingSlot" parent="Menu" instance=ExtResource("2_il2kt")]
+position = Vector2(-23, 196)
+slotToDisplay = 49
+showOutline = false
+isHoldSlot = true
+
+[node name="InventoryBody" type="Node2D" parent="Menu"]
+position = Vector2(6, 44)
+
+[node name="slot10" parent="Menu/InventoryBody" instance=ExtResource("2_il2kt")]
+slotToDisplay = 10
+
+[node name="slot11" parent="Menu/InventoryBody" instance=ExtResource("2_il2kt")]
+position = Vector2(18, 0)
+slotToDisplay = 11
+
+[node name="slot12" parent="Menu/InventoryBody" instance=ExtResource("2_il2kt")]
+position = Vector2(36, 0)
+slotToDisplay = 12
+
+[node name="slot13" parent="Menu/InventoryBody" instance=ExtResource("2_il2kt")]
+position = Vector2(54, 0)
+slotToDisplay = 13
+
+[node name="slot14" parent="Menu/InventoryBody" instance=ExtResource("2_il2kt")]
+position = Vector2(72, 0)
+slotToDisplay = 14
+
+[node name="slot15" parent="Menu/InventoryBody" instance=ExtResource("2_il2kt")]
+position = Vector2(0, 17)
+slotToDisplay = 15
+
+[node name="slot16" parent="Menu/InventoryBody" instance=ExtResource("2_il2kt")]
+position = Vector2(18, 17)
+slotToDisplay = 16
+
+[node name="slot17" parent="Menu/InventoryBody" instance=ExtResource("2_il2kt")]
+position = Vector2(36, 17)
+slotToDisplay = 17
+
+[node name="slot18" parent="Menu/InventoryBody" instance=ExtResource("2_il2kt")]
+position = Vector2(54, 17)
+slotToDisplay = 18
+
+[node name="slot19" parent="Menu/InventoryBody" instance=ExtResource("2_il2kt")]
+position = Vector2(72, 17)
+slotToDisplay = 19
+
+[node name="slot20" parent="Menu/InventoryBody" instance=ExtResource("2_il2kt")]
+position = Vector2(0, 34)
+slotToDisplay = 20
+
+[node name="slot21" parent="Menu/InventoryBody" instance=ExtResource("2_il2kt")]
+position = Vector2(18, 34)
+slotToDisplay = 21
+
+[node name="slot22" parent="Menu/InventoryBody" instance=ExtResource("2_il2kt")]
+position = Vector2(36, 34)
+slotToDisplay = 22
+
+[node name="slot23" parent="Menu/InventoryBody" instance=ExtResource("2_il2kt")]
+position = Vector2(54, 34)
+slotToDisplay = 23
+
+[node name="slot24" parent="Menu/InventoryBody" instance=ExtResource("2_il2kt")]
+position = Vector2(72, 34)
+slotToDisplay = 24
+
+[node name="slot25" parent="Menu/InventoryBody" instance=ExtResource("2_il2kt")]
+position = Vector2(0, 51)
+slotToDisplay = 25
+
+[node name="slot26" parent="Menu/InventoryBody" instance=ExtResource("2_il2kt")]
+position = Vector2(18, 51)
+slotToDisplay = 26
+
+[node name="slot27" parent="Menu/InventoryBody" instance=ExtResource("2_il2kt")]
+position = Vector2(36, 51)
+slotToDisplay = 27
+
+[node name="slot28" parent="Menu/InventoryBody" instance=ExtResource("2_il2kt")]
+position = Vector2(54, 51)
+slotToDisplay = 28
+
+[node name="slot29" parent="Menu/InventoryBody" instance=ExtResource("2_il2kt")]
+position = Vector2(72, 51)
+slotToDisplay = 29
+
+[node name="slot30" parent="Menu/InventoryBody" instance=ExtResource("2_il2kt")]
+position = Vector2(0, 68)
+slotToDisplay = 30
+
+[node name="slot31" parent="Menu/InventoryBody" instance=ExtResource("2_il2kt")]
+position = Vector2(18, 68)
+slotToDisplay = 31
+
+[node name="slot32" parent="Menu/InventoryBody" instance=ExtResource("2_il2kt")]
+position = Vector2(36, 68)
+slotToDisplay = 32
+
+[node name="slot33" parent="Menu/InventoryBody" instance=ExtResource("2_il2kt")]
+position = Vector2(54, 68)
+slotToDisplay = 33
+
+[node name="slot34" parent="Menu/InventoryBody" instance=ExtResource("2_il2kt")]
+position = Vector2(72, 68)
+slotToDisplay = 34
+
+[node name="slot35" parent="Menu/InventoryBody" instance=ExtResource("2_il2kt")]
+position = Vector2(0, 85)
+slotToDisplay = 35
+
+[node name="slot36" parent="Menu/InventoryBody" instance=ExtResource("2_il2kt")]
+position = Vector2(18, 85)
+slotToDisplay = 36
+
+[node name="slot37" parent="Menu/InventoryBody" instance=ExtResource("2_il2kt")]
+position = Vector2(36, 85)
+slotToDisplay = 37
+
+[node name="slot38" parent="Menu/InventoryBody" instance=ExtResource("2_il2kt")]
+position = Vector2(54, 85)
+slotToDisplay = 38
+
+[node name="slot39" parent="Menu/InventoryBody" instance=ExtResource("2_il2kt")]
+position = Vector2(72, 85)
+slotToDisplay = 39
+
+[node name="ArmorSlots" type="Node2D" parent="Menu"]
+position = Vector2(15, 157)
+
+[node name="slot40" parent="Menu/ArmorSlots" instance=ExtResource("2_il2kt")]
+slotToDisplay = 40
+
+[node name="slot41" parent="Menu/ArmorSlots" instance=ExtResource("2_il2kt")]
+position = Vector2(0, 19)
+slotToDisplay = 41
+
+[node name="slot42" parent="Menu/ArmorSlots" instance=ExtResource("2_il2kt")]
+position = Vector2(0, 38)
+slotToDisplay = 42
+
+[node name="AccessorySlots" type="Node2D" parent="Menu"]
+position = Vector2(52, 158)
+
+[node name="slot43" parent="Menu/AccessorySlots" instance=ExtResource("2_il2kt")]
+slotToDisplay = 43
+
+[node name="slot44" parent="Menu/AccessorySlots" instance=ExtResource("2_il2kt")]
+position = Vector2(0, 19)
+slotToDisplay = 44
+
+[node name="slot45" parent="Menu/AccessorySlots" instance=ExtResource("2_il2kt")]
+position = Vector2(0, 38)
+slotToDisplay = 45
+
+[node name="slot46" parent="Menu/AccessorySlots" instance=ExtResource("2_il2kt")]
+position = Vector2(17, 0)
+slotToDisplay = 46
+
+[node name="slot47" parent="Menu/AccessorySlots" instance=ExtResource("2_il2kt")]
+position = Vector2(17, 19)
+slotToDisplay = 47
+
+[node name="slot48" parent="Menu/AccessorySlots" instance=ExtResource("2_il2kt")]
+position = Vector2(17, 38)
+slotToDisplay = 48
