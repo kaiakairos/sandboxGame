@@ -4,21 +4,28 @@
 [ext_resource type="Script" path="res://world_scenes/system/system.gd" id="1_vw61b"]
 [ext_resource type="PackedScene" uid="uid://c1b1vgh12jqww" path="res://object_scenes/player/player.tscn" id="2_xgfnh"]
 
-[node name="System" type="Node2D"]
+[node name="System" type="Node2D" node_paths=PackedStringArray("rootPlanet")]
 script = ExtResource("1_vw61b")
+rootPlanet = NodePath("CosmicBodies/planet")
 
 [node name="Objects" type="Node2D" parent="."]
 
 [node name="Player" parent="Objects" node_paths=PackedStringArray("system") instance=ExtResource("2_xgfnh")]
-position = Vector2(2, -348)
+position = Vector2(6046, -582)
 system = NodePath("../..")
 
 [node name="CosmicBodies" type="Node2D" parent="."]
 
-[node name="Planet" parent="CosmicBodies" instance=ExtResource("1_blgvb")]
+[node name="planet" parent="CosmicBodies" instance=ExtResource("1_blgvb")]
 
-[node name="Planet2" parent="CosmicBodies" instance=ExtResource("1_blgvb")]
-position = Vector2(2085, 0)
+[node name="planet2" parent="CosmicBodies" node_paths=PackedStringArray("orbiting") instance=ExtResource("1_blgvb")]
+position = Vector2(5000, 0)
+orbiting = NodePath("../planet")
+orbitSpeed = 2.0
+orbitDistance = 6000
 
-[node name="Planet3" parent="CosmicBodies" instance=ExtResource("1_blgvb")]
-position = Vector2(2148, -1600)
+[node name="planet3" parent="CosmicBodies" node_paths=PackedStringArray("orbiting") instance=ExtResource("1_blgvb")]
+position = Vector2(3000, 0)
+orbiting = NodePath("../planet2")
+orbitSpeed = 4.0
+orbitDistance = 2000

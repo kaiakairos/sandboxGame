@@ -5,7 +5,13 @@ var system = null
 @onready var chunkContainer = $ChunkContainer
 @onready var entityContainer = $EntityContainer
 
+@export var mass := 10000.0
 @export var orbiting : Node2D
+@export var orbitSpeed :float = 0.0001
+@export var orbitDistance :int = 0
+var orbitPeriod = 0
+var orbitReverse = false
+var orbitVelocity = Vector2.ZERO
 
 var chunkScene = preload("res://world_scenes/chunk/chunk.tscn")
 
@@ -25,6 +31,8 @@ var chunkArray2D = []
 
 var visibleChunks = []
 
+var hasPlayer = false
+
 func _ready():
 	set_physics_process(false)
 	generateEmptyArray()
@@ -33,18 +41,51 @@ func _ready():
 	
 	$isVisible.rect = Rect2(SIZEINCHUNKS*-32,SIZEINCHUNKS*-32,SIZEINCHUNKS*64,SIZEINCHUNKS*64)
 	
-	if orbiting == null:
-		set_process(false)
 
 func _process(delta):
 	##Orbit##
-	var newPos = position.rotated(0.0001)
-	var pos = position
-	position.x = newPos.x
-	position.y = newPos.y
 	
-	GlobalRef.lightmap.position -= pos - position
+	if orbiting != null:
+		
+		var posHold = position
+		
+		if !orbitReverse:
+			orbitPeriod += orbitSpeed * 0.0001
 
+			position = orbiting.position + Vector2(orbitDistance,0).rotated(orbitPeriod)
+			position.x = int(position.x)
+			position.y = int(position.y)
+			
+			orbitVelocity = position - posHold
+		else:
+			
+			posHold = orbiting.position
+			
+			orbitPeriod += orbitSpeed * 0.0001
+		
+			orbiting.position = position + Vector2(-orbitDistance,0).rotated(orbitPeriod)
+			orbiting.position.x = int(orbiting.position.x)
+			orbiting.position.y = int(orbiting.position.y)
+		
+			orbitVelocity = orbiting.position - posHold
+		
+		if hasPlayer:
+			GlobalRef.player.scrollBackgroundsSpace(orbitVelocity*-200,delta)
+		
+		
+func reverseOrbitingParents():
+	if orbiting == null:
+		return
+	orbitReverse = true
+	orbiting.reverseOrbitingParents()
+
+func clearOrbitingParents():
+	orbitReverse = false
+	if orbiting != null:
+		orbiting.clearOrbitingParents()
+
+
+##CHUNK SIMULATION
 func _physics_process(delta):
 	tick += 1
 	var chunksToUpdate = []
@@ -174,8 +215,17 @@ func getBlockRoundedDistance(x,y):
 func _on_is_visible_screen_entered():
 	createChunks()
 	system.reparentToPlanet(GlobalRef.player,self)
+	hasPlayer = true
+	reverseOrbitingParents()
 
 
 func _on_is_visible_screen_exited():
 	clearChunks()
 	system.dumpObjectToSpace(GlobalRef.player)
+	GlobalRef.player.velocity += orbitVelocity
+	hasPlayer = false
+	
+	# calculateOrbitVelocity
+	
+	
+	clearOrbitingParents()

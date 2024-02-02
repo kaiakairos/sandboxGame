@@ -7,6 +7,7 @@ extends CharacterBody2D
 @onready var camera = $CameraOrigin/Camera2D
 
 @onready var map = $CameraOrigin/Camera2D/SystemMap
+@onready var backgroundHolder = $CameraOrigin/Camera2D/Backgroundholder
 
 var rotated = 0
 
@@ -23,37 +24,39 @@ var maxCameraDistance := 0
 func _ready():
 	GlobalRef.player = self
 	PlayerData.addItem(0,1995)
+	#velocity = Vector2(0,929.56545234)
+	#velocity = Vector2(0,1697.14113)
+	#velocity = Vector2(0,600.03)
+	#move_and_slide()
+	
 
 func _process(delta):
 	if is_instance_valid(planet):
 		planetMovement(delta)
 	else:
-		
 		if system != null:
 			for planet in system.cosmicBodyContainer.get_children():
-				var gravityConstant := 1000.0
-				var mass := 1000.0
+				var gravityConstant :float= GlobalRef.gravityConstant
+				var mass :float= planet.mass
 				var playerMass := 1.0
 				
 				var distance = planet.global_position - global_position
-				var forceAmount = (gravityConstant*mass*playerMass)/(distance.length()*distance.length())
+				var forceAmount = ((gravityConstant*mass*playerMass)/(distance.length()*distance.length()))*delta*144
 				
 				velocity += distance.normalized() * forceAmount
-		
-		
-		
+
 		move_and_slide()
 
 		sprite.rotate(0.01)
 		
-		if position.x < -10000:
-			position.x += 20000
-		if position.y < -10000:
-			position.y += 20000
-		if position.x > 10000:
-			position.x -= 20000
-		if position.y > 10000:
-			position.y -= 20000
+		if position.x < -32768:
+			position.x += 65536
+		if position.y < -32768:
+			position.y += 65536
+		if position.x > 32768:
+			position.x -= 65536
+		if position.y > 32768:
+			position.y -= 65536
 		GlobalRef.lightmap.position = global_position - Vector2(256,256)
 	
 	scrollBackgrounds(delta)
@@ -82,11 +85,11 @@ func planetMovement(delta):
 	newVel.x = lerp(newVel.x,dir*speed,0.2)
 	newVel.y += gravity * delta
 	
-	newVel.y = min(newVel.y,140)
+	newVel.y = min(newVel.y,300)
 	
-	if Input.is_action_pressed("jump"):
-		newVel.y = -500
 	if isOnFloor():
+		if Input.is_action_just_pressed("jump"):
+			newVel.y = -275
 		camera.rotation = lerp_angle(camera.rotation,rotated*(PI/2),0.2)
 	
 	velocity = newVel.rotated(rotated*(PI/2))
@@ -108,11 +111,11 @@ func cameraMovement():
 	$CameraOrigin.position.x = int($CameraOrigin.position.x)
 	$CameraOrigin.position.y = int($CameraOrigin.position.y)
 
+########################### ANIMATION ################################
 func playerAnimation(dir,newVel,delta):
-	
+	#improve this later
 	if dir != 0:
 		sprite.scale.x = dir
-	
 	if !isOnFloor():
 		if newVel.y <= 0:
 			animationPlayer.play("jump")
@@ -137,20 +140,20 @@ func squishSprites(target,delta):
 			obj.position.y = lerp(obj.position.y,3.0+(3.0*int(target!=1.0)),20*delta)
 
 func dig():
-	
 	if !is_instance_valid(planet):
 		return
-	
-	var mousePos = planet.get_local_mouse_position()
-	var tile = planet.posToTile(mousePos)
-	if tile != null:
-		var edit = Vector3(tile.x,tile.y,0)
-		if Input.is_action_just_pressed("mouse_left"):
-			planet.editTiles({edit:planet.airOrCaveAir(tile.x,tile.y)})
-		if Input.is_action_just_pressed("mouse_right"):
-			planet.editTiles({edit:2})
-		if Input.is_action_just_pressed("inventory"):
-			planet.editTiles({edit:8})
+
+func scrollBackgrounds(delta):
+	for layer in backgroundHolder.get_children():
+		layer.updatePosition(velocity.rotated(-camera.rotation)*-delta)
+
+func scrollBackgroundsSpace(vel,delta):
+	for layer in backgroundHolder.get_children():
+		layer.updatePosition(vel.rotated(-camera.rotation)*-delta)
+
+
+################################ MATHS ################################
+
 
 func getPlanetPosition():
 	var angle1 = Vector2(1,1)
@@ -162,6 +165,7 @@ func getPlanetPosition():
 	return [0,1,3,2][dot1 + dot2]
 
 func isOnFloor():
+	#improve this
 	$FloorAngles.rotation = rotated*(PI/2)
 	
 	if $FloorAngles/FloorCast1.is_colliding():
@@ -171,6 +175,7 @@ func isOnFloor():
 	return false
 
 func isUnderCeiling():
+	#improve this
 	$CeilingAngles.rotation = rotated*(PI/2)
 	
 	if $CeilingAngles/cCast1.is_colliding():
@@ -178,6 +183,9 @@ func isUnderCeiling():
 	if $CeilingAngles/cCast2.is_colliding():
 		return true
 	return false
+
+######################### LIGHTS #################################
+## DO NOT TOUCH !!!!!!!!!!!!
 
 func updateLight():
 	if !is_instance_valid(planet):
@@ -188,6 +196,7 @@ func updateLight():
 		GlobalRef.lightmap.pushUpdate(planet,newPos)
 	previousChunk = currentChunk
 
+
 func updateLightStatic():
 	if !is_instance_valid(planet):
 		return
@@ -195,7 +204,3 @@ func updateLightStatic():
 	var newPos = (currentChunk * 64) - Vector2(1024,1024) - Vector2(256,256)
 	GlobalRef.lightmap.pushUpdate(planet,newPos)
 	previousChunk = currentChunk
-
-func scrollBackgrounds(delta):
-	for layer in $CameraOrigin/Camera2D/Backgroundholder.get_children():
-		layer.updatePosition(velocity.rotated(-camera.rotation)*-delta)

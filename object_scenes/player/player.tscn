@@ -119,31 +119,35 @@ shape = SubResource("RectangleShape2D_8s1yf")
 [node name="PlayerLayers" type="CanvasGroup" parent="."]
 
 [node name="handBack" type="Sprite2D" parent="PlayerLayers"]
+modulate = Color(1, 0.968627, 0.901961, 1)
 position = Vector2(0, 3)
 texture = ExtResource("2_a2jo3")
 offset = Vector2(0, -8)
 hframes = 7
 
 [node name="shirt" type="Sprite2D" parent="PlayerLayers"]
+modulate = Color(0.819608, 0.352941, 0.352941, 1)
 position = Vector2(0, 3)
 texture = ExtResource("3_vs5p5")
 offset = Vector2(0, -8)
 hframes = 7
 
 [node name="pants" type="Sprite2D" parent="PlayerLayers"]
+modulate = Color(0.74902, 0.360784, 0.709804, 1)
 position = Vector2(0, 3)
 texture = ExtResource("4_2l72k")
 offset = Vector2(0, -8)
 hframes = 7
 
 [node name="head" type="Sprite2D" parent="PlayerLayers"]
-modulate = Color(0.552941, 0.521569, 1, 1)
+modulate = Color(1, 0.968627, 0.901961, 1)
 position = Vector2(0, 3)
 texture = ExtResource("5_hktle")
 offset = Vector2(0, -8)
 hframes = 7
 
 [node name="eye" type="Sprite2D" parent="PlayerLayers"]
+modulate = Color(0.929412, 0.670588, 0.278431, 1)
 position = Vector2(0, 3)
 texture = ExtResource("6_uk1hk")
 offset = Vector2(0, -8)
@@ -157,6 +161,7 @@ offset = Vector2(0, -8)
 hframes = 7
 
 [node name="handFront" type="Sprite2D" parent="PlayerLayers"]
+modulate = Color(1, 0.968627, 0.901961, 1)
 position = Vector2(0, 3)
 texture = ExtResource("8_0olu2")
 offset = Vector2(0, -8)

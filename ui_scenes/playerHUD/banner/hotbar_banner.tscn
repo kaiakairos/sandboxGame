@@ -72,8 +72,15 @@ offset_right = 262.0
 offset_bottom = 233.0
 color = Color(0, 0, 0, 0.898039)
 
+[node name="line" type="ColorRect" parent="Menu"]
+offset_left = 5.0
+offset_top = 42.0
+offset_right = 91.0
+offset_bottom = 43.0
+color = Color(0.0823529, 0.113725, 0.156863, 1)
+
 [node name="InventoryBody" type="Node2D" parent="Menu"]
-position = Vector2(6, 44)
+position = Vector2(6, 48)
 
 [node name="slot10" parent="Menu/InventoryBody" instance=ExtResource("2_il2kt")]
 slotToDisplay = 10
@@ -195,7 +202,7 @@ position = Vector2(72, 85)
 slotToDisplay = 39
 
 [node name="ArmorSlots" type="Node2D" parent="Menu"]
-position = Vector2(15, 157)
+position = Vector2(15, 161)
 
 [node name="slot40" parent="Menu/ArmorSlots" instance=ExtResource("2_il2kt")]
 slotToDisplay = 40
@@ -209,7 +216,7 @@ position = Vector2(0, 38)
 slotToDisplay = 42
 
 [node name="AccessorySlots" type="Node2D" parent="Menu"]
-position = Vector2(52, 158)
+position = Vector2(52, 162)
 
 [node name="slot43" parent="Menu/AccessorySlots" instance=ExtResource("2_il2kt")]
 slotToDisplay = 43
