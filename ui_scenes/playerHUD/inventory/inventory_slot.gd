@@ -11,6 +11,7 @@ func _ready():
 	PlayerData.updateInventory.connect(updateDisplay)
 	$Slot.visible = showOutline
 	updateDisplay()
+	updateSelected()
 	
 	if isHoldSlot:
 		$button.queue_free()

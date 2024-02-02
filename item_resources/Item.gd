@@ -5,3 +5,7 @@ class_name Item
 @export var texture : Texture
 
 @export var maxStackSize := 99
+
+
+func onUse(tileX:int,tileY:int,planetDir:int,planet:Planet):
+	pass

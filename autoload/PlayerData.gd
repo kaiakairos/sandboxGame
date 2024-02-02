@@ -1,9 +1,13 @@
 extends Node
 
-## [ITEMID,COUNT]
+## MOVEMENT ##
+var speed = 100.0
+
+
+## INVENTORY ##
+# [ITEMID,COUNT]
 var inventory = {} #0-39 inventory, 40-42 armor, 43-48 acces, 49 held
 signal updateInventory
-
 var selectedSlot = 0
 
 func _ready():
@@ -67,3 +71,13 @@ func swapItem(slot1,slot2):
 	inventory[slot2] = carry
 	emit_signal("updateInventory")
 	
+
+func getSelectedItemData():
+	return ItemData.data[inventory[selectedSlot][0]]
+
+func consumeSelected():
+	inventory[selectedSlot][1] -= 1
+	if inventory[selectedSlot][1] <= 0:
+		inventory[selectedSlot] = [-1,-1]
+	emit_signal("updateInventory")
+

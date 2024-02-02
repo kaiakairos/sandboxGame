@@ -1,0 +1,10 @@
+[gd_resource type="Resource" script_class="ItemMining" load_steps=3 format=3 uid="uid://oqtfu2iad3n2"]
+
+[ext_resource type="Script" path="res://item_resources/item_classes/ItemMining.gd" id="1_tnqt7"]
+[ext_resource type="Texture2D" uid="uid://funnkblrnibs" path="res://item_resources/item_textures/testPickaxe.png" id="2_gjap8"]
+
+[resource]
+script = ExtResource("1_tnqt7")
+id = 1
+texture = ExtResource("2_gjap8")
+maxStackSize = 1
