@@ -132,7 +132,11 @@ func posToTile(pos):
 		return null
 	
 	return tilePos
-	
+
+func tileToPos(pos):
+	var planetRadius = SIZEINCHUNKS * 32
+	return (pos * 8) - Vector2(planetRadius,planetRadius) + Vector2(4,4)
+
 func generateEmptyArray():
 	centerPoint = Vector2(SIZEINCHUNKS*4,SIZEINCHUNKS*4) - Vector2(0.5,0.5)
 	

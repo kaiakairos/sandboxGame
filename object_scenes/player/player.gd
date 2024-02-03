@@ -30,7 +30,6 @@ var maxCameraDistance := 0
 
 func _ready():
 	GlobalRef.player = self
-	PlayerData.addItem(0,1995)
 	PlayerData.addItem(1,2)
 
 func _process(delta):

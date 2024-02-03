@@ -1,5 +1,7 @@
 extends Node
 
+@onready var groundItemScene = preload("res://object_scenes/ground_item/ground_item.tscn")
+
 var data = {
 	0:load("res://block_resources/blocks/Air.tres"),
 	1:load("res://block_resources/blocks/Stone.tres"),
@@ -12,3 +14,11 @@ var data = {
 	8:load("res://block_resources/blocks/Water.tres"),
 	9:load("res://block_resources/blocks/Lava.tres"),
 }
+
+func spawnGroundItem(tilex:int,tiley:int,id:int,planet:Planet):
+	if id == -1:
+		return
+	var ins = groundItemScene.instantiate()
+	ins.itemID = id
+	ins.position = planet.tileToPos(Vector2(tilex,tiley))
+	planet.entityContainer.add_child(ins)
