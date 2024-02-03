@@ -4,7 +4,7 @@ class_name ItemBlock
 @export var blockID := 0
 
 
-func onUse(tileX:int,tileY:int,planetDir:int,planet:Planet):
+func onUse(tileX:int,tileY:int,planetDir:int,planet:Planet,lastTile:Vector2):
 	
 	if planet == null:
 		#Cancel if not on planet

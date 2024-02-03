@@ -1,0 +1,35 @@
+[gd_scene load_steps=5 format=3 uid="uid://dq0j81fm53aje"]
+
+[ext_resource type="Script" path="res://object_scenes/blockBreak/block_break.gd" id="1_o2xuf"]
+[ext_resource type="Texture2D" uid="uid://dlkkk863ax42x" path="res://object_scenes/blockBreak/holUp.png" id="3_3nge0"]
+[ext_resource type="Texture2D" uid="uid://mwjxc6goor4m" path="res://block_resources/block_textures/dirt.png" id="4_m60a3"]
+
+[sub_resource type="Curve" id="Curve_fgqng"]
+_data = [Vector2(0, 1), 0.0, 0.0, 0, 0, Vector2(1, 0), -3.44655, 0.0, 0, 0]
+point_count = 2
+
+[node name="BlockBreak" type="Node2D"]
+z_index = 2
+script = ExtResource("1_o2xuf")
+
+[node name="Sprite" type="Sprite2D" parent="."]
+modulate = Color(0.568627, 0.568627, 0.729412, 1)
+texture = ExtResource("3_3nge0")
+
+[node name="particles" type="CPUParticles2D" parent="."]
+amount = 10
+lifetime = 0.4
+texture = ExtResource("4_m60a3")
+direction = Vector2(0, -1)
+spread = 180.0
+gravity = Vector2(0, 0)
+initial_velocity_min = 22.6
+initial_velocity_max = 35.25
+damping_min = 68.8
+damping_max = 83.2
+scale_amount_min = 0.2
+scale_amount_max = 0.2
+scale_amount_curve = SubResource("Curve_fgqng")
+
+[node name="blockTexture" type="Sprite2D" parent="."]
+texture = ExtResource("4_m60a3")

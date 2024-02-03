@@ -23,6 +23,7 @@ var animTick = 0
 
 var maxCameraDistance := 0
 
+var lastTileItemUsedOn := Vector2(-10,-10)
 
 ######################################################################
 ########################### BASIC FUNTIONS ###########################
@@ -48,9 +49,10 @@ func _process(delta):
 	
 	scrollBackgrounds(delta)
 	
-	if Input.is_action_just_pressed("mouse_left"):
+	if Input.is_action_pressed("mouse_left"):
 		useItem()
-	
+	else:
+		lastTileItemUsedOn = Vector2(-10,-10)
 	
 ######################################################################
 ############################## MOVEMENT ##############################
@@ -146,8 +148,15 @@ func useItem():
 	
 	var itemData = PlayerData.getSelectedItemData()
 	if itemData != null and tile != null:
-		itemData.onUse(tile.x,tile.y,getPlanetPosition(),planet)
-
+		
+		if itemData.clickToUse:
+			if Input.is_action_just_pressed("mouse_left"):
+				itemData.onUse(tile.x,tile.y,getPlanetPosition(),planet,lastTileItemUsedOn)
+		else:
+			itemData.onUse(tile.x,tile.y,getPlanetPosition(),planet,lastTileItemUsedOn)
+		
+		lastTileItemUsedOn = Vector2(tile.x,tile.y)
+		
 ######################################################################
 ############################ ANIMATION ###############################
 ######################################################################

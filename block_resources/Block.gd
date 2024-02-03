@@ -19,6 +19,9 @@ class_name Block
 ## -1 will match current block ID
 @export var breakParticle : int = -1
 
+## time in seconds to break
+@export var breakTime : float = 0.5
+
 var airs = [0,7]
 
 func onTick(x,y,data,layer,dir):

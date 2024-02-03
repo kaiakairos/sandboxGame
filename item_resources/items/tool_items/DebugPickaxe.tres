@@ -5,6 +5,8 @@
 
 [resource]
 script = ExtResource("1_tnqt7")
+miningMultiplier = 5.0
 id = 1
 texture = ExtResource("2_gjap8")
 maxStackSize = 1
+clickToUse = false

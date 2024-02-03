@@ -1,11 +1,18 @@
 extends Item
 class_name ItemMining
 
+@export var miningMultiplier = 1.0
 
-func onUse(tileX:int,tileY:int,planetDir:int,planet:Planet):
-	var edit = Vector3(tileX,tileY,0)
+func onUse(tileX:int,tileY:int,planetDir:int,planet:Planet,lastTile:Vector2):
 	
-	var tileData = BlockData.data[planet.planetData[tileX][tileY][0]]
-	tileData.breakTile(tileX,tileY,planet.planetData,0,planetDir,planet)
+	if lastTile == Vector2(tileX,tileY):
+		return
 	
-	planet.editTiles( { edit: planet.airOrCaveAir(tileX,tileY) } )
+	var blockBreaker = load("res://object_scenes/blockBreak/block_break.tscn").instantiate()
+	blockBreaker.position = planet.tileToPos(Vector2(tileX,tileY))
+	blockBreaker.planet = planet
+	blockBreaker.planetDir = planetDir
+	blockBreaker.tileX = tileX
+	blockBreaker.tileY = tileY
+	blockBreaker.blockID = planet.planetData[tileX][tileY][0]
+	planet.entityContainer.add_child(blockBreaker)
