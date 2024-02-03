@@ -116,6 +116,10 @@ func editTiles(changeCommit):
 	var chunksToUpdate = []
 	for change in changeCommit.keys():
 		planetData[change.x][change.y][int(change.z)] = changeCommit[change]
+		
+		if int(change.z) == 0:
+			planetData[change.x][change.y][2] = GlobalRef.globalTick
+		
 		var foundChunk = chunkArray2D[change.x/8][change.y/8]
 		if !chunksToUpdate.has(foundChunk):
 			chunksToUpdate.append(foundChunk)
@@ -145,7 +149,7 @@ func generateEmptyArray():
 		lightData.append([])
 		positionLookup.append([])
 		for y in range(SIZEINCHUNKS*8):
-			planetData[x].append([0,0]) # TILE LAYER, BACKGROUND LAYER
+			planetData[x].append([0,0,0]) # TILE LAYER, BACKGROUND LAYER, LAST TICK SINCE UPDATED
 			lightData[x].append(0.0)
 			positionLookup[x].append(getBlockPosition(x,y))
 

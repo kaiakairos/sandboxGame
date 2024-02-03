@@ -19,6 +19,7 @@ texture = ExtResource("3_3nge0")
 [node name="particles" type="CPUParticles2D" parent="."]
 amount = 10
 lifetime = 0.4
+preprocess = 0.5
 texture = ExtResource("4_m60a3")
 direction = Vector2(0, -1)
 spread = 180.0

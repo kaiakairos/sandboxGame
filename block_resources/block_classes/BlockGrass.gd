@@ -7,6 +7,11 @@ class_name BlockGrass
 
 func onTick(x,y,data,layer,dir):
 	
+	if GlobalRef.globalTick > data[x][y][2] + 60:
+		var spwead = {}
+		spwead[Vector3(x,y,layer)] = 6
+		return spwead
+	
 	if randi() % spreadChance != 0:
 		return {}
 	var spwead = {}

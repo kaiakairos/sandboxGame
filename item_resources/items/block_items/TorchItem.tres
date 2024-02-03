@@ -1,0 +1,12 @@
+[gd_resource type="Resource" script_class="ItemBlock" load_steps=3 format=3 uid="uid://bve0mv2hp8u1"]
+
+[ext_resource type="Script" path="res://item_resources/item_classes/ItemBlock.gd" id="1_04d3d"]
+[ext_resource type="Texture2D" uid="uid://c3h8hh2ebvhpq" path="res://block_resources/block_textures/torch.png" id="2_y4d25"]
+
+[resource]
+script = ExtResource("1_04d3d")
+blockID = 6
+id = 3
+texture = ExtResource("2_y4d25")
+maxStackSize = 99
+clickToUse = false

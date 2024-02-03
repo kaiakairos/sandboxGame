@@ -5,7 +5,7 @@
 
 [resource]
 script = ExtResource("1_3i2av")
-spreadChance = 1000
+spreadChance = 1
 blocksCanSpreadTo = Array[int]([2])
 blockId = 3
 texture = ExtResource("2_qxu5n")
@@ -17,3 +17,4 @@ lightMultiplier = 0.9
 lightEmmission = 0.0
 itemToDrop = 0
 breakParticle = 2
+breakTime = 0.5

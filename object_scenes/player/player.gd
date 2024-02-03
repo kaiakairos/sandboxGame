@@ -1,4 +1,6 @@
 extends CharacterBody2D
+class_name Player
+
 
 @export var system : Node2D
 
@@ -53,6 +55,8 @@ func _process(delta):
 		useItem()
 	else:
 		lastTileItemUsedOn = Vector2(-10,-10)
+		$HandRoot/PlayerHand.visible = false
+		$PlayerLayers/handFront.visible = true
 	
 ######################################################################
 ############################## MOVEMENT ##############################
@@ -61,6 +65,7 @@ func _process(delta):
 func onPlanetMovement(delta):
 	rotated = getPlanetPosition()
 	sprite.rotation = lerp_angle(sprite.rotation,rotated*(PI/2),0.4)
+	$HandRoot.rotation = sprite.rotation
 	
 	var underCeiling = isUnderCeiling()
 	var onFloor = isOnFloor()
@@ -143,20 +148,56 @@ func cameraMovement():
 
 func useItem():
 	
+	var itemData = PlayerData.getSelectedItemData()
+	if itemData == null:
+		$HandRoot/PlayerHand.visible = false
+		$PlayerLayers/handFront.visible = true
+		$HandRoot/handSwing.stop()
+		return
+	
+	
+	if Input.is_action_just_pressed("anyInventoryKey"):
+		$HandRoot/handSwing.stop()
+		$HandRoot/PlayerHand/itemSprite.texture = itemData.texture
+		return
+	
 	var mousePos = planet.get_local_mouse_position()
 	var tile = planet.posToTile(mousePos)
 	
-	var itemData = PlayerData.getSelectedItemData()
 	if itemData != null and tile != null:
 		
 		if itemData.clickToUse:
 			if Input.is_action_just_pressed("mouse_left"):
 				itemData.onUse(tile.x,tile.y,getPlanetPosition(),planet,lastTileItemUsedOn)
+				itemSwingAnimation(itemData)
 		else:
 			itemData.onUse(tile.x,tile.y,getPlanetPosition(),planet,lastTileItemUsedOn)
-		
+			if !$HandRoot/handSwing.is_playing():
+				itemSwingAnimation(itemData)
+			
 		lastTileItemUsedOn = Vector2(tile.x,tile.y)
-		
+
+func itemSwingAnimation(itemData):
+	$HandRoot/handSwing.play("swing")
+	$HandRoot/PlayerHand/itemSprite.texture = itemData.texture
+	$HandRoot/PlayerHand.visible = true
+	$PlayerLayers/handFront.visible = false
+
+func _on_hand_swing_animation_finished(anim_name):
+	var itemData = PlayerData.getSelectedItemData()
+	
+	if itemData == null:
+		$HandRoot/PlayerHand.visible = false
+		$PlayerLayers/handFront.visible = true
+		return
+	
+	if !itemData.clickToUse and Input.is_action_pressed("mouse_left"):
+		$HandRoot/handSwing.play(anim_name)
+		return
+	
+	$HandRoot/PlayerHand.visible = false
+	$PlayerLayers/handFront.visible = true
+
 ######################################################################
 ############################ ANIMATION ###############################
 ######################################################################
@@ -167,6 +208,7 @@ func playerAnimation(dir,newVel,delta):
 		sprite.scale.x = dir
 		backItem.flip_h = dir == 1
 		backItem.offset.x = 5.33333 * -dir
+		$HandRoot.scale.x = dir
 	
 	backItem.visible = PlayerData.selectedSlot != 0
 	
