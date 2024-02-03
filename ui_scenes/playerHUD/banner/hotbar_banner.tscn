@@ -1,7 +1,38 @@
-[gd_scene load_steps=3 format=3 uid="uid://daqevwntvcp3o"]
+[gd_scene load_steps=11 format=3 uid="uid://daqevwntvcp3o"]
 
 [ext_resource type="Script" path="res://ui_scenes/playerHUD/banner/hotbar_banner.gd" id="1_iyyfi"]
 [ext_resource type="PackedScene" uid="uid://cr7y1t1hoywt1" path="res://ui_scenes/playerHUD/inventory/inventory_slot.tscn" id="2_il2kt"]
+[ext_resource type="Texture2D" uid="uid://g2dpyvmk34cm" path="res://ui_scenes/playerHUD/crafting/outline.png" id="3_agtxv"]
+[ext_resource type="PackedScene" uid="uid://d6kj1g07b5ym" path="res://ui_scenes/playerHUD/crafting/crafting_icon.tscn" id="4_2t1ey"]
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_lombr"]
+bg_color = Color(0.207843, 0.286275, 0.4, 1)
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_yhha6"]
+bg_color = Color(0.239216, 0.329412, 0.458824, 1)
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_o3p5s"]
+bg_color = Color(0.239216, 0.329412, 0.458824, 1)
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_sesr6"]
+content_margin_left = 4.0
+content_margin_top = 0.0
+content_margin_right = 4.0
+content_margin_bottom = 0.0
+bg_color = Color(0.0823529, 0.113725, 0.156863, 1)
+corner_detail = 1
+
+[sub_resource type="Theme" id="Theme_yy38c"]
+VScrollBar/styles/grabber = SubResource("StyleBoxFlat_lombr")
+VScrollBar/styles/grabber_highlight = SubResource("StyleBoxFlat_yhha6")
+VScrollBar/styles/grabber_pressed = SubResource("StyleBoxFlat_o3p5s")
+VScrollBar/styles/scroll = SubResource("StyleBoxFlat_sesr6")
+VScrollBar/styles/scroll_focus = null
+VSlider/constants/center_grabber = 0
+
+[sub_resource type="LabelSettings" id="LabelSettings_bk67w"]
+font_size = 11
+font_color = Color(0.207843, 0.286275, 0.4, 1)
 
 [node name="HotbarBanner" type="Node2D"]
 z_index = 170
@@ -63,7 +94,6 @@ showOutline = false
 isHoldSlot = true
 
 [node name="Menu" type="Node2D" parent="."]
-visible = false
 position = Vector2(-1, -1)
 
 [node name="background" type="ColorRect" parent="Menu"]
@@ -240,3 +270,112 @@ slotToDisplay = 47
 [node name="slot48" parent="Menu/AccessorySlots" instance=ExtResource("2_il2kt")]
 position = Vector2(17, 38)
 slotToDisplay = 48
+
+[node name="Crafting" type="Node2D" parent="Menu"]
+position = Vector2(99, 47)
+
+[node name="Outline" type="Sprite2D" parent="Menu/Crafting"]
+texture = ExtResource("3_agtxv")
+centered = false
+
+[node name="ScrollContainer" type="ScrollContainer" parent="Menu/Crafting"]
+offset_left = 4.0
+offset_top = 4.0
+offset_right = 152.0
+offset_bottom = 114.0
+theme = SubResource("Theme_yy38c")
+horizontal_scroll_mode = 0
+vertical_scroll_mode = 2
+
+[node name="GridContainer" type="GridContainer" parent="Menu/Crafting/ScrollContainer"]
+layout_mode = 2
+columns = 5
+
+[node name="CenterContainer" parent="Menu/Crafting/ScrollContainer/GridContainer" instance=ExtResource("4_2t1ey")]
+layout_mode = 2
+
+[node name="CenterContainer2" parent="Menu/Crafting/ScrollContainer/GridContainer" instance=ExtResource("4_2t1ey")]
+layout_mode = 2
+
+[node name="CenterContainer3" parent="Menu/Crafting/ScrollContainer/GridContainer" instance=ExtResource("4_2t1ey")]
+layout_mode = 2
+
+[node name="CenterContainer4" parent="Menu/Crafting/ScrollContainer/GridContainer" instance=ExtResource("4_2t1ey")]
+layout_mode = 2
+
+[node name="CenterContainer5" parent="Menu/Crafting/ScrollContainer/GridContainer" instance=ExtResource("4_2t1ey")]
+layout_mode = 2
+
+[node name="CenterContainer6" parent="Menu/Crafting/ScrollContainer/GridContainer" instance=ExtResource("4_2t1ey")]
+layout_mode = 2
+
+[node name="CenterContainer7" parent="Menu/Crafting/ScrollContainer/GridContainer" instance=ExtResource("4_2t1ey")]
+layout_mode = 2
+
+[node name="CenterContainer8" parent="Menu/Crafting/ScrollContainer/GridContainer" instance=ExtResource("4_2t1ey")]
+layout_mode = 2
+
+[node name="CenterContainer9" parent="Menu/Crafting/ScrollContainer/GridContainer" instance=ExtResource("4_2t1ey")]
+layout_mode = 2
+
+[node name="CenterContainer10" parent="Menu/Crafting/ScrollContainer/GridContainer" instance=ExtResource("4_2t1ey")]
+layout_mode = 2
+
+[node name="CenterContainer11" parent="Menu/Crafting/ScrollContainer/GridContainer" instance=ExtResource("4_2t1ey")]
+layout_mode = 2
+
+[node name="CenterContainer12" parent="Menu/Crafting/ScrollContainer/GridContainer" instance=ExtResource("4_2t1ey")]
+layout_mode = 2
+
+[node name="CenterContainer13" parent="Menu/Crafting/ScrollContainer/GridContainer" instance=ExtResource("4_2t1ey")]
+layout_mode = 2
+
+[node name="CenterContainer14" parent="Menu/Crafting/ScrollContainer/GridContainer" instance=ExtResource("4_2t1ey")]
+layout_mode = 2
+
+[node name="CenterContainer15" parent="Menu/Crafting/ScrollContainer/GridContainer" instance=ExtResource("4_2t1ey")]
+layout_mode = 2
+
+[node name="CenterContainer16" parent="Menu/Crafting/ScrollContainer/GridContainer" instance=ExtResource("4_2t1ey")]
+layout_mode = 2
+
+[node name="CenterContainer17" parent="Menu/Crafting/ScrollContainer/GridContainer" instance=ExtResource("4_2t1ey")]
+layout_mode = 2
+
+[node name="CenterContainer18" parent="Menu/Crafting/ScrollContainer/GridContainer" instance=ExtResource("4_2t1ey")]
+layout_mode = 2
+
+[node name="CenterContainer19" parent="Menu/Crafting/ScrollContainer/GridContainer" instance=ExtResource("4_2t1ey")]
+layout_mode = 2
+
+[node name="CenterContainer20" parent="Menu/Crafting/ScrollContainer/GridContainer" instance=ExtResource("4_2t1ey")]
+layout_mode = 2
+
+[node name="CenterContainer21" parent="Menu/Crafting/ScrollContainer/GridContainer" instance=ExtResource("4_2t1ey")]
+layout_mode = 2
+
+[node name="CenterContainer22" parent="Menu/Crafting/ScrollContainer/GridContainer" instance=ExtResource("4_2t1ey")]
+layout_mode = 2
+
+[node name="CenterContainer23" parent="Menu/Crafting/ScrollContainer/GridContainer" instance=ExtResource("4_2t1ey")]
+layout_mode = 2
+
+[node name="CenterContainer24" parent="Menu/Crafting/ScrollContainer/GridContainer" instance=ExtResource("4_2t1ey")]
+layout_mode = 2
+
+[node name="CenterContainer25" parent="Menu/Crafting/ScrollContainer/GridContainer" instance=ExtResource("4_2t1ey")]
+layout_mode = 2
+
+[node name="CenterContainer26" parent="Menu/Crafting/ScrollContainer/GridContainer" instance=ExtResource("4_2t1ey")]
+layout_mode = 2
+
+[node name="CenterContainer27" parent="Menu/Crafting/ScrollContainer/GridContainer" instance=ExtResource("4_2t1ey")]
+layout_mode = 2
+
+[node name="Label" type="Label" parent="Menu/Crafting"]
+offset_left = 9.0
+offset_top = 120.0
+offset_right = 148.0
+offset_bottom = 133.0
+text = "stone pickaxe"
+label_settings = SubResource("LabelSettings_bk67w")

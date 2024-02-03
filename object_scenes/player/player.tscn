@@ -1,7 +1,8 @@
-[gd_scene load_steps=22 format=3 uid="uid://c1b1vgh12jqww"]
+[gd_scene load_steps=23 format=3 uid="uid://c1b1vgh12jqww"]
 
 [ext_resource type="Script" path="res://object_scenes/player/player.gd" id="1_7l8c2"]
 [ext_resource type="Texture2D" uid="uid://bdal1quvajxp" path="res://object_scenes/player/sprites/layerHandBack.png" id="2_a2jo3"]
+[ext_resource type="Texture2D" uid="uid://1ef0ri8u4vs4" path="res://item_resources/item_textures/pickaxeStone.png" id="2_sxcrt"]
 [ext_resource type="PackedScene" uid="uid://cwctu1ofv35ix" path="res://ui_scenes/map/system_map.tscn" id="3_1j4nq"]
 [ext_resource type="PackedScene" uid="uid://cq6k7eeybndp6" path="res://object_scenes/lightmapCover/lightmap.tscn" id="3_37tb5"]
 [ext_resource type="PackedScene" uid="uid://daqevwntvcp3o" path="res://ui_scenes/playerHUD/banner/hotbar_banner.tscn" id="3_et7b7"]
@@ -100,6 +101,18 @@ tracks/0/keys = {
 "method": &"setAllPlayerFrames"
 }]
 }
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("BackItem:position")
+tracks/1/interp = 0
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0, 0.09, 0.2, 0.3),
+"transitions": PackedFloat32Array(1, 1, 1, 1),
+"update": 0,
+"values": [Vector2(0, -1), Vector2(0, 0), Vector2(0, -1), Vector2(0, 0)]
+}
 
 [sub_resource type="AnimationLibrary" id="AnimationLibrary_4n17m"]
 _data = {
@@ -115,6 +128,13 @@ script = ExtResource("1_7l8c2")
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
 shape = SubResource("RectangleShape2D_8s1yf")
+
+[node name="BackItem" type="Sprite2D" parent="."]
+scale = Vector2(0.5, 0.5)
+texture = ExtResource("2_sxcrt")
+offset = Vector2(-5.333, -3.433)
+flip_h = true
+flip_v = true
 
 [node name="PlayerLayers" type="CanvasGroup" parent="."]
 

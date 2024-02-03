@@ -1,0 +1,10 @@
+[gd_resource type="Resource" script_class="ItemMining" load_steps=3 format=3 uid="uid://da7q0p7gga7o2"]
+
+[ext_resource type="Script" path="res://item_resources/item_classes/ItemMining.gd" id="1_ak4lg"]
+[ext_resource type="Texture2D" uid="uid://1ef0ri8u4vs4" path="res://item_resources/item_textures/pickaxeStone.png" id="2_sf7ke"]
+
+[resource]
+script = ExtResource("1_ak4lg")
+id = 2
+texture = ExtResource("2_sf7ke")
+maxStackSize = 1

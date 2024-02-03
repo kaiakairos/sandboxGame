@@ -3,6 +3,7 @@ extends CharacterBody2D
 @export var system : Node2D
 
 @onready var sprite = $PlayerLayers
+@onready var backItem = $BackItem
 @onready var animationPlayer = $AnimationPlayer
 @onready var camera = $CameraOrigin/Camera2D
 @onready var cameraOrigin = $CameraOrigin
@@ -30,7 +31,13 @@ var maxCameraDistance := 0
 
 func _ready():
 	GlobalRef.player = self
-	PlayerData.addItem(1,2)
+	
+	PlayerData.updateInventory.connect(setBackItemTexture)
+	
+	PlayerData.addItem(1,1)
+	PlayerData.addItem(2,1)
+	
+	
 
 func _process(delta):
 	if is_instance_valid(planet):
@@ -149,6 +156,11 @@ func playerAnimation(dir,newVel,delta):
 	#improve this later
 	if dir != 0:
 		sprite.scale.x = dir
+		backItem.flip_h = dir == 1
+		backItem.offset.x = 5.33333 * -dir
+	
+	backItem.visible = PlayerData.selectedSlot != 0
+	
 	if !isOnFloor():
 		if newVel.y <= 0:
 			animationPlayer.play("jump")
@@ -160,6 +172,9 @@ func playerAnimation(dir,newVel,delta):
 		animationPlayer.play("idle")
 	elif animationPlayer.current_animation != "walk":
 			animationPlayer.play("walk")
+
+func setBackItemTexture():
+	backItem.texture = ItemData.data[PlayerData.inventory[0][0]].texture
 
 func setAllPlayerFrames(frame:int):
 	for obj in sprite.get_children():

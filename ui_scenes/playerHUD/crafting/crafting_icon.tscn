@@ -1,0 +1,18 @@
+[gd_scene load_steps=3 format=3 uid="uid://d6kj1g07b5ym"]
+
+[ext_resource type="Texture2D" uid="uid://cfpnwrfbjmq36" path="res://ui_scenes/playerHUD/crafting/craftingIcon.png" id="1_vtg8b"]
+[ext_resource type="Texture2D" uid="uid://1ef0ri8u4vs4" path="res://item_resources/item_textures/pickaxeStone.png" id="2_vaagm"]
+
+[node name="CenterContainer" type="CenterContainer"]
+offset_right = 32.0
+offset_bottom = 32.0
+
+[node name="CraftingIcon" type="TextureRect" parent="."]
+layout_mode = 2
+texture = ExtResource("1_vtg8b")
+stretch_mode = 3
+
+[node name="TextureRect" type="TextureRect" parent="."]
+layout_mode = 2
+texture = ExtResource("2_vaagm")
+stretch_mode = 3
