@@ -12,6 +12,7 @@ var gravity = 600
 
 var itemID = 0
 var amount = 1
+var maxAmount = 99
 
 var ticks = 0
 
@@ -20,6 +21,7 @@ var tweening = false
 func _ready():
 	var itemData = ItemData.data[itemID]
 	texture.texture = itemData.texture
+	maxAmount = itemData.maxStackSize
 	
 	var randVelocity = Vector2(randi_range(-70,70),-60)
 	rotSide = getPlanetPosition()
@@ -76,6 +78,12 @@ func _on_stack_body_entered(body):
 	
 	if body is GroundItem:
 		if body.ticks > ticks:
+			
+			if body.itemID != itemID:
+				return
+			if amount + body.amount > maxAmount:
+				return
+			
 			amount += body.amount
 			determineAmount()
 			body.tweenAndDestroy(position,false)

@@ -138,7 +138,7 @@ func useItem():
 	var tile = planet.posToTile(mousePos)
 	
 	var itemData = PlayerData.getSelectedItemData()
-	if itemData != null:
+	if itemData != null and tile != null:
 		itemData.onUse(tile.x,tile.y,getPlanetPosition(),planet)
 
 ######################################################################
