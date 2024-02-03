@@ -1,0 +1,21 @@
+[gd_scene load_steps=4 format=3 uid="uid://cli5fuebnjxko"]
+
+[ext_resource type="Texture2D" uid="uid://mwjxc6goor4m" path="res://block_resources/block_textures/dirt.png" id="1_o88t4"]
+[ext_resource type="Script" path="res://object_scenes/particles/blockBreak/block_break_particles.gd" id="2_aa3k4"]
+
+[sub_resource type="Curve" id="Curve_o888i"]
+_data = [Vector2(0, 0.538461), 0.0, 0.0, 0, 0, Vector2(1, 0), 0.0, 0.0, 0, 0]
+point_count = 2
+
+[node name="BlockBreakParticles" type="CPUParticles2D"]
+lifetime = 0.4
+explosiveness = 1.0
+texture = ExtResource("1_o88t4")
+emission_shape = 3
+emission_rect_extents = Vector2(4, 4)
+spread = 180.0
+gravity = Vector2(0, 0)
+initial_velocity_min = 5.2
+initial_velocity_max = 5.2
+scale_amount_curve = SubResource("Curve_o888i")
+script = ExtResource("2_aa3k4")

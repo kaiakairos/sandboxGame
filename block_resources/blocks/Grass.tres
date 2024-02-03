@@ -16,3 +16,4 @@ hasCollision = true
 lightMultiplier = 0.9
 lightEmmission = 0.0
 itemToDrop = 0
+breakParticle = 2

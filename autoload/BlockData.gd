@@ -1,6 +1,7 @@
 extends Node
 
 @onready var groundItemScene = preload("res://object_scenes/ground_item/ground_item.tscn")
+@onready var blockBreakParticle = preload("res://object_scenes/particles/blockBreak/block_break_particles.tscn")
 
 var data = {
 	0:load("res://block_resources/blocks/Air.tres"),
@@ -20,5 +21,11 @@ func spawnGroundItem(tilex:int,tiley:int,id:int,planet:Planet):
 		return
 	var ins = groundItemScene.instantiate()
 	ins.itemID = id
+	ins.position = planet.tileToPos(Vector2(tilex,tiley))
+	planet.entityContainer.add_child(ins)
+
+func spawnBreakParticle(tilex:int,tiley:int,id:int,planet:Planet):
+	var ins = blockBreakParticle.instantiate()
+	ins.textureID = id
 	ins.position = planet.tileToPos(Vector2(tilex,tiley))
 	planet.entityContainer.add_child(ins)

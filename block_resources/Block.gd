@@ -16,6 +16,9 @@ class_name Block
 ## -1 means there will be no item
 @export var itemToDrop : int = -1
 
+## -1 will match current block ID
+@export var breakParticle : int = -1
+
 var airs = [0,7]
 
 func onTick(x,y,data,layer,dir):
@@ -27,5 +30,9 @@ func onBreak(x,y,data,layer,dir):
 func breakTile(x,y,data,layer,dir,planet):
 	
 	BlockData.spawnGroundItem(x,y,itemToDrop,planet)
+	if breakParticle == -1:
+		BlockData.spawnBreakParticle(x,y,blockId,planet)
+	else:
+		BlockData.spawnBreakParticle(x,y,breakParticle,planet)
 	
 	onBreak(x,y,data,layer,dir)

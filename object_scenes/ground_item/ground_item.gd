@@ -63,8 +63,7 @@ func _on_area_2d_body_entered(body):
 		return
 	
 	
-	if PlayerData.addItem(itemID,amount) == 0:
-		tweenAndDestroy(body.position)
+	tweenAndDestroy(body.position,true)
 
 
 func _on_stack_body_entered(body):
@@ -79,14 +78,14 @@ func _on_stack_body_entered(body):
 		if body.ticks > ticks:
 			amount += body.amount
 			determineAmount()
-			body.tweenAndDestroy(position)
+			body.tweenAndDestroy(position,false)
 			return
 
 func determineAmount():
 	if amount > 1:
 		tint.color.a = (amount - 1) * 0.05
 
-func tweenAndDestroy(pos):
+func tweenAndDestroy(pos,shouldAddItem):
 	if tweening:
 		return
 	tweening = true
@@ -94,4 +93,8 @@ func tweenAndDestroy(pos):
 	tween.tween_property(self,"position",pos,0.1)
 	await tween.finished
 	
-	queue_free()
+	if shouldAddItem:
+		if PlayerData.addItem(itemID,amount) == 0:
+			queue_free()
+	else:
+		queue_free()
