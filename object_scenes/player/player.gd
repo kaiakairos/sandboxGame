@@ -39,6 +39,7 @@ func _ready():
 	
 	PlayerData.addItem(1,1)
 	PlayerData.addItem(2,1)
+	PlayerData.addItem(3,198)
 	
 	
 
