@@ -41,7 +41,6 @@ func _ready():
 	PlayerData.addItem(2,1)
 	PlayerData.addItem(3,198)
 	
-	
 
 func _process(delta):
 	if is_instance_valid(planet):

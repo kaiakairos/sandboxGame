@@ -70,20 +70,14 @@ func _on_area_2d_body_entered(body):
 
 func _on_stack_body_entered(body):
 	
-	if tweening:
+	if tweening or body == self:
 		return
-	
-	if body == self:
-		return
-	
+
 	if body is GroundItem:
+		if body.itemID != itemID or body.tweening:
+			return
 		if body.ticks > ticks:
-			
-			if body.itemID != itemID:
-				return
-			if amount + body.amount > maxAmount:
-				return
-			
+			if amount + body.amount > maxAmount: return
 			amount += body.amount
 			determineAmount()
 			body.tweenAndDestroy(position,false)

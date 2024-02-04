@@ -33,6 +33,8 @@ gdscript/warnings/integer_division=0
 
 window/size/viewport_width=260
 window/size/viewport_height=230
+window/size/window_width_override=520
+window/size/window_height_override=460
 window/stretch/mode="viewport"
 window/vsync/vsync_mode=0
 

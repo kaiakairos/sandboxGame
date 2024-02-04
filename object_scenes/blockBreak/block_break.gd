@@ -44,6 +44,7 @@ func scanBlockOpen(planetData,x,y,layer):
 
 func _process(delta):
 	
+	#this shit sucks fix it
 	
 	if planet == null:
 		print_debug("BLOCK BREAK HAS NO PLANET ASSIGNED")
